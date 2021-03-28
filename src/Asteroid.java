@@ -1,7 +1,9 @@
+import java.io.FileNotFoundException;
+
 public class Asteroid extends Sprite{
 
-    public Asteroid(int xPos, int yPos, int size) {
-        super(xPos, yPos, size);
+    public Asteroid(int xPos, int yPos) throws FileNotFoundException {
+        super("asteroid.png",xPos, yPos);
     }
 
     public void move() {

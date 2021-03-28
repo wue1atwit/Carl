@@ -1,7 +1,9 @@
+import java.io.FileNotFoundException;
+
 public class Carl extends Sprite{
 
-    public Carl() {
-        super(50,360,50);
+    public Carl() throws FileNotFoundException {
+        super("carlos.png",50,360);
     }
 
     @Override

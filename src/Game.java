@@ -89,7 +89,7 @@ public class Game extends Application {
 		Carl carl = new Carl();
 		ArrayList<Asteroid> asteroids = new ArrayList<>();
 		for(int i = 0; i < 70; i++){
-			asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720),50)); //Size needs to go eventually
+			asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720))); //Size needs to go eventually
 		}
 		playRoot.getChildren().add(carl.getGraphic());
 		for(Asteroid a : asteroids){

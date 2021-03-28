@@ -1,24 +1,21 @@
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 abstract public class Sprite implements Moveable, Drawable{
-    protected Rectangle graphic;
+    protected ImageView graphic;
     protected int xPos;
     protected int yPos;
-    protected int prevXPos;
-    protected int prevYPos;
-    protected String dir; //direction of motion
-    protected int size; //size of the rectangle and how much we move
 
-    public Sprite(int xPos, int yPos, int size) {
+    public Sprite(String file, int xPos, int yPos) throws FileNotFoundException {
         this.xPos=xPos;
         this.yPos=yPos;
-        this.size=size;
-        graphic = new Rectangle(xPos,yPos,size,size);
-        graphic.setFill(Color.CYAN);
-        prevXPos=xPos;
-        prevYPos=yPos;
-        dir="UP";
+        graphic = new ImageView(new Image(new FileInputStream(file)));
+
     }
 
     public void draw() {
@@ -32,23 +29,8 @@ abstract public class Sprite implements Moveable, Drawable{
     public int getYPos() {
         return this.yPos;
     }
-    public int getPrevXPos() {
-        return this.prevXPos;
-    }
-    public int getPrevYPos() {
-        return this.prevYPos;
-    }
-    public String getDir() {
-        return dir;
-    }
-    public int getSize() {
-        return size;
-    }
-    public Rectangle getGraphic() {
+    public ImageView getGraphic() {
         return graphic;
-    }
-    public void setDir(String dir) {
-        this.dir=dir;
     }
 
 }
