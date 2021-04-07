@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -18,12 +19,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 
 
 public class Game extends Application {
 
+	static int lives = 3;
 	final Font baseFont = Font.font("OCR A Extended", 36);
 
 	public static void main(String[] args) {
@@ -85,45 +88,12 @@ public class Game extends Application {
 		 */
 		Pane playRoot = new Pane();
 		playRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+
+		ArrayList<ImageView> red = new ArrayList<>();
+		HBox redHearts = new HBox(10);
+
 		Random rand = new Random();
 		Carl carl = new Carl();
-		ArrayList<Asteroid> asteroids = new ArrayList<>();
-		for(int i = 0; i < 70; i++){
-			asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720))); //Size needs to go eventually
-		}
-		playRoot.getChildren().add(carl.getGraphic());
-		for(Asteroid a : asteroids){
-			playRoot.getChildren().add(a.getGraphic());
-		}
-
-		EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				int speed = rand.nextInt(15-5)+5;
-				carl.draw();
-				for(int i = 0; i < asteroids.size(); i++){
-					asteroids.get(i).draw();
-					asteroids.get(i).move(speed);
-				}
-//				asteroids.get(0).move(speed);
-//				asteroids.get(1).move(speed);
-//				asteroids.get(2).move(s);
-
-//				asteroids.get(0).draw();
-//				asteroids.get(1).draw();
-//				asteroids.get(2).draw();
-//				asteroids.get(0).move(1);
-//				asteroids.get(1).move(5);
-//				asteroids.get(2).move(10);
-
-			}
-		};
-
-		Timeline t = new Timeline(new KeyFrame(Duration.millis(30),handler));
-		t.setCycleCount(Timeline.INDEFINITE);
-		t.play();
-
-
 
 
 
@@ -137,7 +107,28 @@ public class Game extends Application {
 		 */
 		primaryStage.setScene(homeScene);
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
-		playButton.setOnAction(e -> primaryStage.setScene(playScene));
+		playButton.setOnAction(e -> {
+			playRoot.getChildren().add(carl.getGraphic());
+			for(int i = 0; i < 3; i++) {
+				try {
+					red.add(new ImageView(new Image(new FileInputStream("redHearts.png"))));
+				} catch (FileNotFoundException exception) {
+				}
+			}
+
+			redHearts.setLayoutX(1100);
+			redHearts.setLayoutY(0);
+			redHearts.getChildren().addAll(red);
+			playRoot.getChildren().add(redHearts);
+
+
+			try {
+				//Level 1
+				levels(playRoot,carl,rand,70,5);
+			} catch (FileNotFoundException exception) {
+			}
+			primaryStage.setScene(playScene);
+		});
 		exitButton.setOnAction(e -> primaryStage.setScene(homeScene));
 
 
@@ -150,8 +141,17 @@ public class Game extends Application {
 			if(e.getCode()==KeyCode.DOWN) {
 				carl.changeY(10);
 			}
+			if(e.getCode() == KeyCode.SPACE){
+				addLife(redHearts, red);
+				System.out.println(lives);
+			}
+			if(e.getCode() == KeyCode.ENTER){
+				removeLife(redHearts,red);
+				System.out.println(lives);
+			}
 			if(e.getCode() == KeyCode.ESCAPE){
 				primaryStage.setScene(homeScene);
+				remove(playRoot);
 			}
 		});
 		playRoot.setOnKeyReleased(e -> {
@@ -161,4 +161,64 @@ public class Game extends Application {
 		primaryStage.show();
 
 	}
+
+
+	public static void levels(Pane playRoot, Carl carl, Random rand, int numOfAsteroids, int lowSpeed) throws FileNotFoundException {
+		ArrayList<Asteroid> asteroids = new ArrayList<>();
+		for(int i = 0; i < numOfAsteroids; i++){
+			asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
+		}
+
+		for(Asteroid a : asteroids){
+			playRoot.getChildren().add(a.getGraphic());
+		}
+
+		EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				int speed = rand.nextInt(15-lowSpeed)+lowSpeed;
+				carl.draw();
+				for(int i = 0; i < asteroids.size(); i++){
+					asteroids.get(i).draw();
+					asteroids.get(i).move(speed);
+				}
+
+
+			}
+		};
+
+		Timeline t = new Timeline(new KeyFrame(Duration.millis(30),handler));
+		t.setCycleCount(Timeline.INDEFINITE);
+		t.play();
+	}
+
+	public static void remove(Pane playRoot){
+		playRoot.getChildren().clear();
+
+	}
+
+	public static void addLife(HBox redHearts, ArrayList<ImageView> red){
+		if(lives == 1 || lives == 2) {
+			try {
+				red.add(new ImageView(new Image(new FileInputStream("redHearts.png"))));
+				redHearts.getChildren().add(new ImageView(new Image(new FileInputStream("redHearts.png"))));
+			} catch (FileNotFoundException exception) {
+			}
+			lives++;
+		}
+	}
+
+	public static void removeLife(HBox redHearts, ArrayList<ImageView> red){
+
+			if(lives >= 1) {
+				redHearts.getChildren().remove(red.get(lives-1));
+				lives--;
+			}
+			if(lives == 0){
+
+				System.exit(0);
+			}
+
+	}
 }
+
