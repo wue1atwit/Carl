@@ -6,9 +6,9 @@ public class Carl extends Sprite{
         super("carls.png",50,360);
     }
 
-    @Override
-    public void move() {
 
+    public void resetPos(){
+        yPos = 360;
     }
 
     public void changeX(int change){

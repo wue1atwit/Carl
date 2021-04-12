@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-abstract public class Sprite implements Moveable, Drawable{
+abstract public class Sprite implements Drawable{
     protected ImageView graphic;
     protected int xPos;
     protected int yPos;
@@ -28,6 +28,12 @@ abstract public class Sprite implements Moveable, Drawable{
     }
     public int getYPos() {
         return this.yPos;
+    }
+    public void setXPos(int xPos){
+        this.xPos = xPos;
+    }
+    public void setYPos(int xPos){
+        this.yPos = yPos;
     }
     public ImageView getGraphic() {
         return graphic;
