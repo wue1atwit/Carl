@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class LifeHeart {
     private static int lives;
+
     private ArrayList<ImageView> hearts = new ArrayList<>();
     HBox heartBox = new HBox(10);
 
@@ -28,6 +29,15 @@ public class LifeHeart {
     public void removeLives(){
         heartBox.getChildren().remove(hearts.get(lives-1));
         lives--;
+    }
+
+    public void addLives(){
+        if(lives >= 3){
+            lives = 3;
+        } else {
+            heartBox.getChildren().add(hearts.get(lives));
+            lives++;
+        }
     }
 
     public int getLives(){

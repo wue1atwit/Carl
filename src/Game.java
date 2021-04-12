@@ -126,8 +126,11 @@ public class Game extends Application {
 				primaryStage.setScene(homeScene);
 				remove(playRoot);
 			}
-			if(e.getCode() == KeyCode.SPACE){
+			if(e.getCode() == KeyCode.DELETE){
 				gameStructure.getLifeHeart().removeLives();
+			}
+			if(e.getCode() == KeyCode.INSERT){
+				gameStructure.getLifeHeart().addLives();
 			}
 		});
 
