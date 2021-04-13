@@ -6,9 +6,6 @@ public class Asteroid extends Sprite{
         super("asteroid.png",xPos, yPos);
     }
 
-    public void move() {
-
-    }
 
     public void move(int change){
         xPos-=change;

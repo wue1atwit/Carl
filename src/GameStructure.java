@@ -23,17 +23,21 @@ public class GameStructure {
     public GameStructure(Pane playRoot, Carl carl, Random rand, Timeline t) throws FileNotFoundException {
         asteroids.clear();
 
-        playRoot.getChildren().add(lifeHeart.getGraphic());
+        playRoot.getChildren().add(lifeHeart.getGraphic()); //Adds the hearts to the screen
 
 
+        //Add asteroids with bounded random x and random y positions
         for(int i = 0; i < numOfAsteroids; i++){
             asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
         }
 
+        //Add the asteroids onto the screen
         for(Asteroid a : asteroids){
             playRoot.getChildren().add(a.getGraphic());
         }
 
+
+        //Handler for the 30ms updates
         handler = new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -50,8 +54,7 @@ public class GameStructure {
 
                 }
 
-                //System.out.println(asteroids.size());
-                checkLevelEnd();
+                checkLevelEnd(); //Checks when the level ends
 
             }
         };
@@ -60,8 +63,9 @@ public class GameStructure {
 
     }
 
+    //Level ends when there is no more asteroids or when lives/hearts equals 0
     public void checkLevelEnd(){
-        System.out.println(lifeHeart.getLives());
+        //System.out.println(lifeHeart.getLives());
         if(asteroids.size() == 0){
             level++;
             System.exit(0);

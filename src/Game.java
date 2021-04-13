@@ -23,6 +23,7 @@ public class Game extends Application {
 	final Font smallFont = Font.font("OCR A Extended",20);
 
 	Timeline t;
+	Random rand = new Random();
 
 
 	public static void main(String[] args) {
@@ -73,7 +74,7 @@ public class Game extends Application {
 		StackPane htpRoot = new StackPane();
 		Button exitButton = new Button("Exit");
 		exitButton.setPrefSize(200,50);
-		exitButton.setFont(Font.font("OCR A Extended",20));
+		exitButton.setFont(smallFont);
 
 		htpRoot.getChildren().addAll(exitButton);
 		htpRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
@@ -83,7 +84,6 @@ public class Game extends Application {
 		 */
 		Pane playRoot = new Pane();
 		playRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
-		Random rand = new Random();
 		Carl carl = new Carl();
 		GameStructure gameStructure = new GameStructure(playRoot,carl,rand,t);
 
@@ -99,20 +99,21 @@ public class Game extends Application {
 		primaryStage.setScene(homeScene);
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
 		playButton.setOnAction(e -> {
-			carl.resetPos();
-			playRoot.getChildren().add(carl.getGraphic());
+			carl.resetPos(); //Resets Carl's X Position to 360
+			playRoot.getChildren().add(carl.getGraphic()); //Add Carl to the screen
 
 			t = new Timeline(new KeyFrame(Duration.millis(30),gameStructure.getHandler()));
 			t.setCycleCount(Timeline.INDEFINITE);
 			t.play();
-
 
 			primaryStage.setScene(playScene);
 		});
 		exitButton.setOnAction(e -> primaryStage.setScene(homeScene));
 
 
-
+		/**
+		 * Key Interactions
+		 */
 		playRoot.requestFocus();
 		playRoot.setOnKeyPressed(e -> {
 			if(e.getCode()==KeyCode.UP || e.getCode()==KeyCode.W) {
@@ -133,6 +134,7 @@ public class Game extends Application {
 				gameStructure.getLifeHeart().addLives();
 			}
 		});
+
 
 		primaryStage.setResizable(false);
 		primaryStage.show();

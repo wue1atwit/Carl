@@ -8,12 +8,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class LifeHeart {
-    private static int lives;
+    private int initialLives; //The amount of hearts initially(not affected by updates)
+    private static int lives; //The amount of hearts affected by updates
 
-    private ArrayList<ImageView> hearts = new ArrayList<>();
-    HBox heartBox = new HBox(10);
+    private ArrayList<ImageView> hearts = new ArrayList<>(); //ArrayList of hearts
+    HBox heartBox = new HBox(10); //HBox for the hearts
 
     public LifeHeart(int lives) throws FileNotFoundException {
+        this.initialLives = lives;
         this.lives = lives;
         for(int i = 0; i < lives; i++){
             hearts.add(new ImageView(new Image(new FileInputStream("redHearts.png"))));
@@ -22,7 +24,7 @@ public class LifeHeart {
 
     }
 
-    public Node getGraphic(){
+    public HBox getGraphic(){
         return heartBox;
     }
 
@@ -32,8 +34,8 @@ public class LifeHeart {
     }
 
     public void addLives(){
-        if(lives >= 3){
-            lives = 3;
+        if(lives >= initialLives){
+            lives = initialLives;
         } else {
             heartBox.getChildren().add(hearts.get(lives));
             lives++;
