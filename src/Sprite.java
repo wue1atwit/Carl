@@ -10,6 +10,9 @@ abstract public class Sprite implements Drawable{
     protected ImageView graphic;
     protected int xPos;
     protected int yPos;
+    protected double height;
+    protected double width;
+    protected Rectangle hitbox;
 
     public Sprite(String file, int xPos, int yPos) throws FileNotFoundException {
         this.xPos=xPos;
@@ -32,11 +35,18 @@ abstract public class Sprite implements Drawable{
     public void setXPos(int xPos){
         this.xPos = xPos;
     }
-    public void setYPos(int xPos){
+    public void setYPos(int yPos){
         this.yPos = yPos;
     }
     public ImageView getGraphic() {
         return graphic;
     }
+
+    public Rectangle getHitbox(){
+        return hitbox;
+    }
+
+
+
 
 }

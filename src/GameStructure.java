@@ -47,6 +47,8 @@ public class GameStructure {
                 for(int i = 0; i < asteroids.size(); i++){
                     asteroids.get(i).draw();
                     asteroids.get(i).move(speed);
+                    carl.updateHitbox();
+                    asteroids.get(i).updateHitbox();
                     if(asteroids.get(i).getXPos() < -100){
                         playRoot.getChildren().remove(asteroids.get(i).getGraphic());
                         asteroids.remove(i);
@@ -54,6 +56,16 @@ public class GameStructure {
 
                 }
 
+                for(int i = 0; i < asteroids.size(); i++){
+                    if(carl.collidesWith(asteroids.get(i))){
+                        lifeHeart.removeLives();
+                        System.out.println("-1 life");
+                        playRoot.getChildren().remove(asteroids.get(i).getGraphic());
+                        asteroids.remove(i);
+                    }
+                }
+
+                System.out.println(asteroids.size());
                 checkLevelEnd(); //Checks when the level ends
 
             }

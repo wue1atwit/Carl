@@ -136,7 +136,7 @@ public class Game extends Application {
 		});
 
 
-		primaryStage.setResizable(false);
+		primaryStage.setResizable(true);
 		primaryStage.show();
 
 	}
