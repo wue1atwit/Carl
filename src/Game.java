@@ -117,10 +117,10 @@ public class Game extends Application {
 		playRoot.requestFocus();
 		playRoot.setOnKeyPressed(e -> {
 			if(e.getCode()==KeyCode.UP || e.getCode()==KeyCode.W) {
-				carl.changeY(-10);
+				carl.changeY(-15);
 			}
 			if(e.getCode()==KeyCode.DOWN || e.getCode()==KeyCode.S) {
-				carl.changeY(10);
+				carl.changeY(15);
 			}
 			if(e.getCode() == KeyCode.ESCAPE){
 				t.stop();
