@@ -26,7 +26,7 @@ public class Game extends Application {
 	final Font smallFont = Font.font("OCR A Extended",20);
 
 	GameStructure gameStructure;
-	Timeline t;
+	//Timeline t;
 	Random rand = new Random();
 
 
@@ -90,12 +90,11 @@ public class Game extends Application {
 		playRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		Carl carl = new Carl();
 
-
+		//Timeline t;
 
 		Scene homeScene = new Scene(homeRoot,1280,720);
 		Scene playScene = new Scene(playRoot, 1280,720);
 		Scene htpScene = new Scene(htpRoot,1280,720);
-//		MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("io1.mp3").toURI().toString()));
 
 		/**
 		 * Button Interaction
@@ -103,17 +102,14 @@ public class Game extends Application {
 		primaryStage.setScene(homeScene);
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
 		playButton.setOnAction(e -> {
-//			backgroundSound.play();
 			carl.resetPos(); //Resets Carl's X Position to 360
 
 			try {
-				gameStructure = new GameStructure(primaryStage,homeScene,playRoot,carl,rand,t);
+				gameStructure = new GameStructure(primaryStage,homeScene,playRoot,carl,rand);
 			} catch (FileNotFoundException exception) {
 			}
 
-			t = new Timeline(new KeyFrame(Duration.millis(30),gameStructure.getHandler()));
-			t.setCycleCount(Timeline.INDEFINITE);
-			t.play();
+
 
 			primaryStage.setScene(playScene);
 		});
@@ -133,7 +129,7 @@ public class Game extends Application {
 			}
 			if(e.getCode() == KeyCode.ESCAPE){
 				gameStructure.getSound().stop();
-				t.stop();
+				gameStructure.getTimeline().stop();
 				primaryStage.setScene(homeScene);
 				remove(playRoot);
 			}

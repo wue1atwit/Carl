@@ -26,17 +26,22 @@ public class GameStructure {
 
 
     private static int level = 1;
+
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
     private static ArrayList<LifeUp> lifeUp = new ArrayList<>();
     private EventHandler<ActionEvent> handler;
-    private int numOfAsteroids = 70;
-    private int numOfLifeUp = 2;
-    private int lowSpeed = 5;
+
     LifeHeart lifeHeart = new LifeHeart(3);
 
 
+    private int numOfAsteroids = 70;
+    private int numOfLifeUp = 2;
+    private int lowSpeed = 5;
 
-    public GameStructure(Stage primaryStage, Scene homeScene, Pane playRoot, Carl carl, Random rand, Timeline t) throws FileNotFoundException {
+
+
+
+    public GameStructure(Stage primaryStage, Scene homeScene, Pane playRoot, Carl carl, Random rand) throws FileNotFoundException {
         this.primaryStage = primaryStage;
         this.homeScene = homeScene;
         this.playRoot = playRoot;
@@ -153,6 +158,10 @@ public class GameStructure {
             }
         };
 
+        t = new Timeline(new KeyFrame(Duration.millis(30),this.getHandler()));
+        t.setCycleCount(Timeline.INDEFINITE);
+        t.play();
+
 
 
     }
@@ -184,9 +193,12 @@ public class GameStructure {
         return lifeHeart;
     }
 
+    public Timeline getTimeline(){
+        return t;
+    }
+
     public MediaPlayer getSound(){
         return backgroundSound;
     }
-
 
 }
