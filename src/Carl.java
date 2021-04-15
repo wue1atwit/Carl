@@ -6,8 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Carl extends Sprite{
-    private double height;
-    private double width;
 
     public Carl() throws FileNotFoundException {
         super("carls.png",50,360);

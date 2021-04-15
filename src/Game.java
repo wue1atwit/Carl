@@ -26,7 +26,6 @@ public class Game extends Application {
 	final Font smallFont = Font.font("OCR A Extended",20);
 
 	GameStructure gameStructure;
-	//Timeline t;
 	Random rand = new Random();
 
 
@@ -89,8 +88,6 @@ public class Game extends Application {
 		Pane playRoot = new Pane();
 		playRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		Carl carl = new Carl();
-
-		//Timeline t;
 
 		Scene homeScene = new Scene(homeRoot,1280,720);
 		Scene playScene = new Scene(playRoot, 1280,720);
