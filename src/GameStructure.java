@@ -2,17 +2,27 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameStructure {
+
+    private Stage primaryStage;
+    private Scene homeScene;
+    private Pane playRoot;
+    private Timeline t;
+
+    MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("io1.mp3").toURI().toString()));
 
 
     private static int level = 1;
@@ -26,7 +36,16 @@ public class GameStructure {
 
 
 
-    public GameStructure(Pane playRoot, Carl carl, Random rand, Timeline t) throws FileNotFoundException {
+    public GameStructure(Stage primaryStage, Scene homeScene, Pane playRoot, Carl carl, Random rand, Timeline t) throws FileNotFoundException {
+        this.primaryStage = primaryStage;
+        this.homeScene = homeScene;
+        this.playRoot = playRoot;
+        this.t = t;
+
+
+
+        backgroundSound.play();
+
         asteroids.clear();
         lifeUp.clear();
 
@@ -140,12 +159,16 @@ public class GameStructure {
 
     //Level ends when there is no more asteroids or when lives/hearts equals 0
     public void checkLevelEnd(){
+        System.out.println(lifeHeart.getLives());
         if(asteroids.size() == 0 && lifeUp.size() == 0){
             level++;
             System.exit(0);
         }
         if(lifeHeart.getLives() == 0){
-            System.exit(0);
+            backgroundSound.stop();
+            primaryStage.setScene(homeScene);
+            t.stop();
+            playRoot.getChildren().clear();
         }
     }
 
@@ -161,8 +184,8 @@ public class GameStructure {
         return lifeHeart;
     }
 
-    public void reset(){
-
+    public MediaPlayer getSound(){
+        return backgroundSound;
     }
 
 

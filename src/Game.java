@@ -95,7 +95,7 @@ public class Game extends Application {
 		Scene homeScene = new Scene(homeRoot,1280,720);
 		Scene playScene = new Scene(playRoot, 1280,720);
 		Scene htpScene = new Scene(htpRoot,1280,720);
-		MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("io1.mp3").toURI().toString()));
+//		MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("io1.mp3").toURI().toString()));
 
 		/**
 		 * Button Interaction
@@ -103,11 +103,11 @@ public class Game extends Application {
 		primaryStage.setScene(homeScene);
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
 		playButton.setOnAction(e -> {
-			backgroundSound.play();
+//			backgroundSound.play();
 			carl.resetPos(); //Resets Carl's X Position to 360
 
 			try {
-				gameStructure = new GameStructure(playRoot,carl,rand,t);
+				gameStructure = new GameStructure(primaryStage,homeScene,playRoot,carl,rand,t);
 			} catch (FileNotFoundException exception) {
 			}
 
@@ -132,7 +132,7 @@ public class Game extends Application {
 				carl.changeY(15);
 			}
 			if(e.getCode() == KeyCode.ESCAPE){
-				backgroundSound.stop();
+				gameStructure.getSound().stop();
 				t.stop();
 				primaryStage.setScene(homeScene);
 				remove(playRoot);
