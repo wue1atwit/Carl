@@ -14,7 +14,7 @@ public class Asteroid extends Sprite{
         height = img.getHeight();
         width = img.getWidth();
         hitbox = new Rectangle(this.getXPos(),this.getYPos(),width,height);
-        //hitbox.setFill(Color.YELLOW);
+        hitbox.setFill(Color.YELLOW);
     }
 
 
@@ -22,10 +22,5 @@ public class Asteroid extends Sprite{
         xPos-=change;
     }
 
-    public void updateHitbox(){
-        hitbox = new Rectangle(this.getXPos(),this.getYPos(),width,height);
-        //hitbox.setFill(Color.YELLOW);
-
-    }
 
 }

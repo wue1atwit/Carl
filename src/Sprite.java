@@ -26,6 +26,11 @@ abstract public class Sprite implements Drawable{
         graphic.setY(yPos);
     }
 
+    public void updateHitbox(){
+        hitbox.setX(this.getXPos());
+        hitbox.setY(this.getYPos());
+    }
+
     public int getXPos() {
         return this.xPos;
     }

@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 public class Carl extends Sprite{
     private double height;
     private double width;
-    private Rectangle hitbox;
 
     public Carl() throws FileNotFoundException {
         super("carls.png",50,360);
@@ -16,13 +15,10 @@ public class Carl extends Sprite{
         height = img.getHeight();
         width = img.getWidth();
         hitbox = new Rectangle(this.getXPos(),this.getYPos(),width,height);
-        //hitbox.setFill(Color.YELLOW);
+        hitbox.setFill(Color.YELLOW);
 
     }
 
-    public void updateHitbox(){
-        hitbox = new Rectangle(this.getXPos(),this.getYPos(),width,height);
-    }
 
     public void resetPos(){
         yPos = 360;
@@ -48,5 +44,9 @@ public class Carl extends Sprite{
 
     public Rectangle getHitbox(){
         return hitbox;
+    }
+
+    public double getHeight(){
+        return height;
     }
 }

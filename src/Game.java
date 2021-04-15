@@ -7,10 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
@@ -22,6 +25,7 @@ public class Game extends Application {
 	final Font baseFont = Font.font("OCR A Extended", 36);
 	final Font smallFont = Font.font("OCR A Extended",20);
 
+	GameStructure gameStructure;
 	Timeline t;
 	Random rand = new Random();
 
@@ -85,22 +89,27 @@ public class Game extends Application {
 		Pane playRoot = new Pane();
 		playRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		Carl carl = new Carl();
-		GameStructure gameStructure = new GameStructure(playRoot,carl,rand,t);
+
 
 
 		Scene homeScene = new Scene(homeRoot,1280,720);
 		Scene playScene = new Scene(playRoot, 1280,720);
 		Scene htpScene = new Scene(htpRoot,1280,720);
-
+		MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("io1.mp3").toURI().toString()));
 
 		/**
-		 * Set Scenes
+		 * Button Interaction
 		 */
 		primaryStage.setScene(homeScene);
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
 		playButton.setOnAction(e -> {
+			backgroundSound.play();
 			carl.resetPos(); //Resets Carl's X Position to 360
-			playRoot.getChildren().add(carl.getGraphic()); //Add Carl to the screen
+
+			try {
+				gameStructure = new GameStructure(playRoot,carl,rand,t);
+			} catch (FileNotFoundException exception) {
+			}
 
 			t = new Timeline(new KeyFrame(Duration.millis(30),gameStructure.getHandler()));
 			t.setCycleCount(Timeline.INDEFINITE);
@@ -123,6 +132,7 @@ public class Game extends Application {
 				carl.changeY(15);
 			}
 			if(e.getCode() == KeyCode.ESCAPE){
+				backgroundSound.stop();
 				t.stop();
 				primaryStage.setScene(homeScene);
 				remove(playRoot);
@@ -136,7 +146,7 @@ public class Game extends Application {
 		});
 
 
-		primaryStage.setResizable(true);
+		primaryStage.setResizable(false);
 		primaryStage.show();
 
 	}

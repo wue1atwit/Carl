@@ -3,6 +3,8 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
@@ -11,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class GameStructure {
+
+
     private static int level = 1;
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
     private static ArrayList<LifeUp> lifeUp = new ArrayList<>();
@@ -41,13 +45,19 @@ public class GameStructure {
 
         //Add the asteroids onto the screen
         for(Asteroid a : asteroids){
+            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
             playRoot.getChildren().add(a.getGraphic());
         }
 
         //Add the life-up onto the screen
         for(LifeUp l : lifeUp){
+            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
             playRoot.getChildren().add(l.getGraphic());
         }
+
+        //Add Carl onto the screen
+        playRoot.getChildren().add(carl.getHitbox()); //Debug(hitbox outline)
+        playRoot.getChildren().add(carl.getGraphic());
 
 
         //Handler for the 30ms updates
@@ -55,20 +65,30 @@ public class GameStructure {
             @Override
             public void handle(ActionEvent event) {
 
+
                 int speed = rand.nextInt(15-lowSpeed)+lowSpeed;
+
 
                 carl.draw();
                 carl.updateHitbox();
 
+                if(carl.getYPos() < 0){
+                    carl.setYPos(0);
+                }
 
+                if(carl.getYPos()+carl.getHeight() > 720){
+                    carl.setYPos(669);
+                }
 
                 for(int i = 0; i < asteroids.size(); i++){
+                    asteroids.get(i).updateHitbox();
                     asteroids.get(i).draw();
+
                     asteroids.get(i).move(speed);
 
 
 
-                    asteroids.get(i).updateHitbox();
+
 
                     if(asteroids.get(i).getXPos() < -100){
                         playRoot.getChildren().remove(asteroids.get(i).getGraphic());
@@ -79,10 +99,11 @@ public class GameStructure {
 
                 //LifeUp stuff
                 for(int i = 0; i < lifeUp.size(); i++){
+                    lifeUp.get(i).updateHitbox();
                     lifeUp.get(i).draw();
                     lifeUp.get(i).move(speed);
 
-                    lifeUp.get(i).updateHitbox();
+
 
                     if(lifeUp.get(i).getXPos() < -100){
                         playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
@@ -95,6 +116,7 @@ public class GameStructure {
                     if (carl.collidesWith(lifeUp.get(i))) {
                         lifeHeart.addLives();
                         playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
+                        playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
                         lifeUp.remove(i);
                     }
                 }
@@ -104,11 +126,13 @@ public class GameStructure {
                     if(carl.collidesWith(asteroids.get(i))){
                         lifeHeart.removeLives();
                         playRoot.getChildren().remove(asteroids.get(i).getGraphic());
+                        playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
                         asteroids.remove(i);
                     }
                 }
 
-                //System.out.println(asteroids.size());
+                System.out.println(asteroids.size());
+
                 checkLevelEnd(); //Checks when the level ends
 
             }
@@ -140,6 +164,10 @@ public class GameStructure {
 
     public LifeHeart getLifeHeart(){
         return lifeHeart;
+    }
+
+    public void reset(){
+
     }
 
 
