@@ -72,24 +72,22 @@ public class GameStructure {
                 carl.draw();
                 carl.updateHitbox();
 
+
+                //Screen bounds
                 if(carl.getYPos() < 0){
                     carl.setYPos(0);
                 }
-
                 if(carl.getYPos()+carl.getHeight() > 720){
                     carl.setYPos(669);
                 }
 
+                //Asteroid updates
                 for(int i = 0; i < asteroids.size(); i++){
                     asteroids.get(i).updateHitbox();
                     asteroids.get(i).draw();
-
                     asteroids.get(i).move(speed);
 
-
-
-
-
+                    //Remove asteroids when it goes off the left side
                     if(asteroids.get(i).getXPos() < -100){
                         playRoot.getChildren().remove(asteroids.get(i).getGraphic());
                         asteroids.remove(i);
@@ -97,21 +95,20 @@ public class GameStructure {
 
                 }
 
-                //LifeUp stuff
+                //LifeUp updates
                 for(int i = 0; i < lifeUp.size(); i++){
                     lifeUp.get(i).updateHitbox();
                     lifeUp.get(i).draw();
                     lifeUp.get(i).move(speed);
 
-
-
+                    //Remove life-up when it goes off the left side
                     if(lifeUp.get(i).getXPos() < -100){
                         playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
                         lifeUp.remove(i);
                     }
                 }
 
-                //Life-Up collision
+                //Life-Up collision w/ Carl
                 for(int i = 0; i < lifeUp.size(); i++) {
                     if (carl.collidesWith(lifeUp.get(i))) {
                         lifeHeart.addLives();
@@ -121,7 +118,7 @@ public class GameStructure {
                     }
                 }
 
-                //Asteroid collision
+                //Asteroid collision w/ Carl
                 for(int i = 0; i < asteroids.size(); i++){
                     if(carl.collidesWith(asteroids.get(i))){
                         lifeHeart.removeLives();
@@ -131,7 +128,6 @@ public class GameStructure {
                     }
                 }
 
-                System.out.println(asteroids.size());
 
                 checkLevelEnd(); //Checks when the level ends
 
@@ -144,7 +140,6 @@ public class GameStructure {
 
     //Level ends when there is no more asteroids or when lives/hearts equals 0
     public void checkLevelEnd(){
-        //System.out.println(lifeHeart.getLives());
         if(asteroids.size() == 0 && lifeUp.size() == 0){
             level++;
             System.exit(0);
