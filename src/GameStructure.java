@@ -18,7 +18,7 @@ import java.util.Random;
 public class GameStructure {
 
     private Stage primaryStage;
-    private Scene homeScene;
+    private Scene gameOverScene;
     private Pane playRoot;
     private Timeline t;
 
@@ -41,9 +41,9 @@ public class GameStructure {
 
 
 
-    public GameStructure(Stage primaryStage, Scene homeScene, Pane playRoot, Carl carl, Random rand) throws FileNotFoundException {
+    public GameStructure(Stage primaryStage, Scene gameOverScene, Pane playRoot, Carl carl, Random rand) throws FileNotFoundException {
         this.primaryStage = primaryStage;
-        this.homeScene = homeScene;
+        this.gameOverScene = gameOverScene;
         this.playRoot = playRoot;
         this.t = t;
 
@@ -175,7 +175,7 @@ public class GameStructure {
         }
         if(lifeHeart.getLives() == 0){
             backgroundSound.stop();
-            primaryStage.setScene(homeScene);
+            primaryStage.setScene(gameOverScene);
             t.stop();
             playRoot.getChildren().clear();
         }

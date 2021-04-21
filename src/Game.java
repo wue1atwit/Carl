@@ -10,6 +10,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -43,26 +45,31 @@ public class Game extends Application {
 		VBox buttons = new VBox(10);
 		HBox buttons2 = new HBox(10);
 		StackPane homeRoot = new StackPane();
-		Button playButton = new Button("Play");
-		Button htpButton = new Button("How to Play");
-		Button creditButton = new Button("Credit");
 
-		//Play Button Size
+		//Play Button
+		Button playButton = new Button("Play");
 		playButton.setPrefSize(200,100);
 		playButton.setFont(baseFont);
 
-		//How to Play Size
+		//How to Play Button
+		Button htpButton = new Button("How to Play");
 		htpButton.setPrefSize(200,50);
 		htpButton.setFont(smallFont);
 
 
-		//Credit Size
+		//Credit Button
+		Button creditButton = new Button("Credit");
 		creditButton.setPrefSize(200,50);
 		creditButton.setFont(smallFont);
 
+		//Exit Button
+		Button exitHomeButton = new Button("Exit");
+		exitHomeButton.setPrefSize(200,50);
+		exitHomeButton.setFont(smallFont);
+
 
 		buttons2.getChildren().addAll(htpButton,creditButton);
-		buttons.getChildren().addAll(playButton,buttons2);
+		buttons.getChildren().addAll(playButton,buttons2,exitHomeButton);
 
 		homeRoot.getChildren().add(buttons);
 		buttons.setAlignment(Pos.CENTER);
@@ -97,24 +104,31 @@ public class Game extends Application {
 		gameOverRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		ImageView gameOverImage = new ImageView(new Image(new FileInputStream("images/gameOverCarl.png")));
 
-		Button playAgainButton = new Button("Play Again");
-		playAgainButton.setPrefSize(200,50);
-		playAgainButton.setFont(smallFont);
+		Button mainMenuButton = new Button("Main Menu");
+		mainMenuButton.setPrefSize(200,50);
+		mainMenuButton.setFont(smallFont);
 
 		Button exitGOButton = new Button("Exit");
 		exitGOButton.setPrefSize(200,50);
 		exitGOButton.setFont(smallFont);
 
-		VBox goItems = new VBox(10);
-		HBox goButtons = new HBox(10);
+		HBox.setHgrow(mainMenuButton,Priority.ALWAYS);
+		HBox.setHgrow(exitGOButton,Priority.ALWAYS);
 
-		goButtons.getChildren().addAll(playAgainButton,exitGOButton);
+		VBox goItems = new VBox(10);
+		HBox goButtons = new HBox(20);
+
+
+
+		goButtons.getChildren().addAll(mainMenuButton,exitGOButton);
 		goItems.getChildren().addAll(gameOverImage,goButtons);
 
 
+
 		gameOverRoot.getChildren().addAll(goItems);
-		goButtons.setAlignment(Pos.CENTER);
+		//goButtons.setAlignment(Pos.CENTER);
 		goItems.setAlignment(Pos.CENTER);
+		goItems.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
 
 
 
@@ -125,24 +139,30 @@ public class Game extends Application {
 		Scene gameOverScene = new Scene(gameOverRoot,1280,720);
 
 
-
-
+		primaryStage.setScene(homeScene);
 
 		//Button Interactions
-		primaryStage.setScene(homeScene);
-		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
 		playButton.setOnAction(e -> {
 			carl.resetPos(); //Resets Carl's X Position to 360
 
 			try {
-				gameStructure = new GameStructure(primaryStage,homeScene,playRoot,carl,rand);
+				gameStructure = new GameStructure(primaryStage,gameOverScene,playRoot,carl,rand);
 			} catch (FileNotFoundException exception) {
 			}
 
 			primaryStage.setScene(playScene);
 		});
-
+		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
 		creditButton.setOnAction(e -> primaryStage.setScene(gameOverScene));
+		exitHomeButton.setOnAction(event -> primaryStage.close());
+
+		//Game Over Buttoms
+		exitGOButton.setOnAction(e -> primaryStage.close());
+		mainMenuButton.setOnAction(event -> {
+			primaryStage.setScene(homeScene);
+			remove(playRoot);
+
+		});
 
 
 
