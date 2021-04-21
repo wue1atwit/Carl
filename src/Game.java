@@ -2,8 +2,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -101,35 +103,32 @@ public class Game extends Application {
 		 * Game Over Screen
 		 */
 		StackPane gameOverRoot = new StackPane();
+		Pane gameOverCarl = new Pane();
 		gameOverRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
-		ImageView gameOverImage = new ImageView(new Image(new FileInputStream("images/gameOverCarl.png")));
+		Image img = new Image(new FileInputStream("images/gameOverCarl.png"));
+		ImageView gameOverImage = new ImageView(img);
 
 		Button mainMenuButton = new Button("Main Menu");
-		mainMenuButton.setPrefSize(200,50);
+		mainMenuButton.setPrefSize(250,50);
 		mainMenuButton.setFont(smallFont);
 
 		Button exitGOButton = new Button("Exit");
-		exitGOButton.setPrefSize(200,50);
+		exitGOButton.setPrefSize(250,50);
 		exitGOButton.setFont(smallFont);
 
-		HBox.setHgrow(mainMenuButton,Priority.ALWAYS);
-		HBox.setHgrow(exitGOButton,Priority.ALWAYS);
 
-		VBox goItems = new VBox(10);
-		HBox goButtons = new HBox(20);
-
+		VBox goItems = new VBox(50);
+		HBox goButtons = new HBox(10);
 
 
 		goButtons.getChildren().addAll(mainMenuButton,exitGOButton);
 		goItems.getChildren().addAll(gameOverImage,goButtons);
 
-
-
-		gameOverRoot.getChildren().addAll(goItems);
-		//goButtons.setAlignment(Pos.CENTER);
+		gameOverCarl.getChildren().addAll(goItems);
+		Group group = new Group(gameOverCarl);
+		gameOverRoot.getChildren().add(group);
+		goButtons.setAlignment(Pos.CENTER);
 		goItems.setAlignment(Pos.CENTER);
-		goItems.setBorder(new Border(new BorderStroke(Color.YELLOW, BorderStrokeStyle.SOLID,CornerRadii.EMPTY,BorderWidths.DEFAULT)));
-
 
 
 
@@ -140,6 +139,7 @@ public class Game extends Application {
 
 
 		primaryStage.setScene(homeScene);
+
 
 		//Button Interactions
 		playButton.setOnAction(e -> {
