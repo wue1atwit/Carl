@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
@@ -75,11 +76,11 @@ public class Game extends Application {
 		 * How to Play Screen
 		 */
 		StackPane htpRoot = new StackPane();
-		Button exitButton = new Button("Exit");
-		exitButton.setPrefSize(200,50);
-		exitButton.setFont(smallFont);
+		Button exitHTPButton = new Button("Exit");
+		exitHTPButton.setPrefSize(200,50);
+		exitHTPButton.setFont(smallFont);
 
-		htpRoot.getChildren().addAll(exitButton);
+		htpRoot.getChildren().addAll(exitHTPButton);
 		htpRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 
 		/**
@@ -89,13 +90,45 @@ public class Game extends Application {
 		playRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 		Carl carl = new Carl();
 
+		/**
+		 * Game Over Screen
+		 */
+		StackPane gameOverRoot = new StackPane();
+		gameOverRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+		ImageView gameOverImage = new ImageView(new Image(new FileInputStream("gameOver.png")));
+
+		Button playAgainButton = new Button("Play Again");
+		playAgainButton.setPrefSize(200,50);
+		playAgainButton.setFont(smallFont);
+
+		Button exitGOButton = new Button("Exit");
+		exitGOButton.setPrefSize(200,50);
+		exitGOButton.setFont(smallFont);
+
+		VBox goItems = new VBox(10);
+		HBox goButtons = new HBox(10);
+
+		//goButtons.getChildren().addAll(playAgainButton,exitGOButton);
+		//goItems.getChildren().addAll(gameOverImage,goButtons);
+
+
+		gameOverRoot.getChildren().addAll(exitGOButton,playAgainButton);
+		playAgainButton.setAlignment(Pos.CENTER);
+		exitGOButton.setAlignment(Pos.CENTER);
+
+
+
+
 		Scene homeScene = new Scene(homeRoot,1280,720);
 		Scene playScene = new Scene(playRoot, 1280,720);
 		Scene htpScene = new Scene(htpRoot,1280,720);
+		Scene gameOverScene = new Scene(gameOverRoot,1280,720);
 
-		/**
-		 * Button Interaction
-		 */
+
+
+
+
+		//Button Interactions
 		primaryStage.setScene(homeScene);
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
 		playButton.setOnAction(e -> {
@@ -106,16 +139,17 @@ public class Game extends Application {
 			} catch (FileNotFoundException exception) {
 			}
 
-
-
 			primaryStage.setScene(playScene);
 		});
-		exitButton.setOnAction(e -> primaryStage.setScene(homeScene));
+
+		creditButton.setOnAction(e -> primaryStage.setScene(gameOverScene));
 
 
-		/**
-		 * Key Interactions
-		 */
+
+		exitHTPButton.setOnAction(e -> primaryStage.setScene(homeScene));
+
+
+		//Key Interactions
 		playRoot.requestFocus();
 		playRoot.setOnKeyPressed(e -> {
 			if(e.getCode()==KeyCode.UP || e.getCode()==KeyCode.W) {
