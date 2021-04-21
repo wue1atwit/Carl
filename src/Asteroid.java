@@ -9,8 +9,8 @@ public class Asteroid extends Sprite{
 
 
     public Asteroid(int xPos, int yPos) throws FileNotFoundException {
-        super("asteroidc.png",xPos, yPos);
-        Image img = new Image(new FileInputStream("asteroidc.png"));
+        super("images/asteroidc.png",xPos, yPos);
+        Image img = new Image(new FileInputStream("images/asteroidc.png"));
         height = img.getHeight();
         width = img.getWidth();
         hitbox = new Rectangle(this.getXPos(),this.getYPos(),width,height);

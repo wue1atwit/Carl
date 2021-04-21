@@ -22,7 +22,7 @@ public class GameStructure {
     private Pane playRoot;
     private Timeline t;
 
-    MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("io1.mp3").toURI().toString()));
+    MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("sound/io1.mp3").toURI().toString()));
 
 
     private static int level = 1;

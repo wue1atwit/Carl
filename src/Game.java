@@ -69,7 +69,7 @@ public class Game extends Application {
 		buttons2.setAlignment(Pos.CENTER);
 
 		//Background
-		Image backgImg = new Image(new FileInputStream("spacebackground.jpg"));
+		Image backgImg = new Image(new FileInputStream("images/spacebackground.jpg"));
 		homeRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 
 		/**
@@ -95,7 +95,7 @@ public class Game extends Application {
 		 */
 		StackPane gameOverRoot = new StackPane();
 		gameOverRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
-		ImageView gameOverImage = new ImageView(new Image(new FileInputStream("gameOver.png")));
+		ImageView gameOverImage = new ImageView(new Image(new FileInputStream("images/gameOverCarl.png")));
 
 		Button playAgainButton = new Button("Play Again");
 		playAgainButton.setPrefSize(200,50);
@@ -108,13 +108,13 @@ public class Game extends Application {
 		VBox goItems = new VBox(10);
 		HBox goButtons = new HBox(10);
 
-		//goButtons.getChildren().addAll(playAgainButton,exitGOButton);
-		//goItems.getChildren().addAll(gameOverImage,goButtons);
+		goButtons.getChildren().addAll(playAgainButton,exitGOButton);
+		goItems.getChildren().addAll(gameOverImage,goButtons);
 
 
-		gameOverRoot.getChildren().addAll(exitGOButton,playAgainButton);
-		playAgainButton.setAlignment(Pos.CENTER);
-		exitGOButton.setAlignment(Pos.CENTER);
+		gameOverRoot.getChildren().addAll(goItems);
+		goButtons.setAlignment(Pos.CENTER);
+		goItems.setAlignment(Pos.CENTER);
 
 
 
@@ -173,6 +173,7 @@ public class Game extends Application {
 		});
 
 
+		primaryStage.getIcons().add(new Image(new FileInputStream("images/cIcon.png")));
 		primaryStage.setResizable(false);
 		primaryStage.show();
 

@@ -9,8 +9,8 @@ public class LifeUp extends Sprite{
 
 
     public LifeUp(int xPos, int yPos) throws FileNotFoundException {
-        super("redHearts.png",xPos, yPos);
-        Image img = new Image(new FileInputStream("redHearts.png"));
+        super("images/redHearts.png",xPos, yPos);
+        Image img = new Image(new FileInputStream("images/redHearts.png"));
         height = img.getHeight();
         width = img.getWidth();
         hitbox = new Rectangle(this.getXPos(),this.getYPos(),width,height);

@@ -18,7 +18,7 @@ public class LifeHeart {
         this.initialLives = lives;
         this.lives = lives;
         for(int i = 0; i < lives; i++){
-            hearts.add(new ImageView(new Image(new FileInputStream("redHearts.png"))));
+            hearts.add(new ImageView(new Image(new FileInputStream("images/redHearts.png"))));
             heartBox.getChildren().add(hearts.get(i));
         }
 

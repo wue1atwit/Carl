@@ -8,8 +8,8 @@ import java.io.FileNotFoundException;
 public class Carl extends Sprite{
 
     public Carl() throws FileNotFoundException {
-        super("carls.png",50,360);
-        Image img = new Image(new FileInputStream("carls.png"));
+        super("images/carls.png",50,360);
+        Image img = new Image(new FileInputStream("images/carls.png"));
         height = img.getHeight();
         width = img.getWidth();
         hitbox = new Rectangle(this.getXPos(),this.getYPos(),width,height);
