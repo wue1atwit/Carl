@@ -182,7 +182,10 @@ public class Game extends Application {
 				carl.changeY(15);
 			}
 			if(e.getCode() == KeyCode.ESCAPE){
-				gameStructure.getSound().stop();
+				gameStructure.setLevel(1);
+				gameStructure.getRoundOneTrack().stop();
+				gameStructure.getRoundTwoTrack().stop();
+				gameStructure.getRoundThreeTrack().stop();
 				gameStructure.getTimeline().stop();
 				primaryStage.setScene(homeScene);
 				remove(playRoot);

@@ -11,7 +11,6 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -23,7 +22,9 @@ public class GameStructure {
     private Timeline t;
     private Random rand;
 
-    MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("sound/io1.mp3").toURI().toString()));
+    MediaPlayer roundOneTrack = new MediaPlayer(new Media(new File("sound/io1.mp3").toURI().toString()));
+    MediaPlayer roundTwoTrack = new MediaPlayer(new Media(new File("sound/io2.mp3").toURI().toString()));
+    MediaPlayer roundThreeTrack = new MediaPlayer(new Media(new File("sound/io3.mp3").toURI().toString()));
 
 
     private static int level = 1;
@@ -36,10 +37,12 @@ public class GameStructure {
 
     LifeHeart lifeHeart = new LifeHeart(3);
 
+    int roundInitial = 0;
 
-    private int numOfAsteroids = 70;
-    private int numOfLifeUp = 2;
-    private int lowSpeed = 5;
+
+    private int numOfAsteroids;
+    private int numOfLifeUp;
+    private int lowSpeed;
 
 
 
@@ -51,7 +54,7 @@ public class GameStructure {
         this.rand = rand;
 
 
-        backgroundSound.play();
+//        roundOneTrack.play();
 
         asteroids.clear();
         lifeUp.clear();
@@ -59,35 +62,35 @@ public class GameStructure {
 
         playRoot.getChildren().add(lifeHeart.getGraphic()); //Adds the hearts to the screen
 
-        //Add asteroids with bounded random x and random y positions
-        for(int i = 0; i < numOfAsteroids; i++){
-            asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
-        }
-
-        //Add life-up with bounded random x and random y positions
-        for(int i = 0; i < numOfLifeUp; i++){
-            lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
-        }
-
-        planets.add(new Planet("images/planet1.png",1280,360));
-        //planets.add(new Planet("planet2.png",1280,360));
-        //planets.add(new Planet("planet3.png",1280,360));
-
-        playRoot.getChildren().add(planets.get(0).getHitbox());
-        playRoot.getChildren().add(planets.get(0).getGraphic());
-
-
-        //Add the asteroids onto the screen
-        for(Asteroid a : asteroids){
-            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
-            playRoot.getChildren().add(a.getGraphic());
-        }
-
-        //Add the life-up onto the screen
-        for(LifeUp l : lifeUp){
-            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
-            playRoot.getChildren().add(l.getGraphic());
-        }
+//        //Add asteroids with bounded random x and random y positions
+//        for(int i = 0; i < numOfAsteroids; i++){
+//            asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
+//        }
+//
+//        //Add life-up with bounded random x and random y positions
+//        for(int i = 0; i < numOfLifeUp; i++){
+//            lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
+//        }
+//
+//        planets.add(new Planet("images/planet1.png",1280,360));
+//        //planets.add(new Planet("planet2.png",1280,360));
+//        //planets.add(new Planet("planet3.png",1280,360));
+//
+//        playRoot.getChildren().add(planets.get(0).getHitbox());
+//        playRoot.getChildren().add(planets.get(0).getGraphic());
+//
+//
+//        //Add the asteroids onto the screen
+//        for(Asteroid a : asteroids){
+//            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
+//            playRoot.getChildren().add(a.getGraphic());
+//        }
+//
+//        //Add the life-up onto the screen
+//        for(LifeUp l : lifeUp){
+//            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
+//            playRoot.getChildren().add(l.getGraphic());
+//        }
 
         //Add Carl onto the screen
         playRoot.getChildren().add(carl.getHitbox()); //Debug(hitbox outline)
@@ -100,6 +103,63 @@ public class GameStructure {
             public void handle(ActionEvent event) {
 
                 if(level == 1) {
+
+                    if(roundInitial == 0){
+                        asteroids.clear();
+                        lifeUp.clear();
+                        planets.clear();
+
+                        numOfAsteroids = 70;
+                        numOfLifeUp  = 2;
+                        lowSpeed = 5;
+                        roundOneTrack.play();
+
+
+                        //Add asteroids with bounded random x and random y positions
+                        for(int i = 0; i < numOfAsteroids; i++){
+                            try {
+                                asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        //Add life-up with bounded random x and random y positions
+                        for(int i = 0; i < numOfLifeUp; i++){
+                            try {
+                                lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        try {
+                            planets.add(new Planet("images/planet1.png",1280,360));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        playRoot.getChildren().add(planets.get(0).getHitbox());
+                        playRoot.getChildren().add(planets.get(0).getGraphic());
+
+
+                        //Add the asteroids onto the screen
+                        for(Asteroid a : asteroids){
+                            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
+                            playRoot.getChildren().add(a.getGraphic());
+                        }
+
+                        //Add the life-up onto the screen
+                        for(LifeUp l : lifeUp){
+                            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
+                            playRoot.getChildren().add(l.getGraphic());
+                        }
+
+
+
+                        roundInitial++;
+                    }
 
                     int speed = rand.nextInt(15 - lowSpeed) + lowSpeed;
 
@@ -180,7 +240,309 @@ public class GameStructure {
                         playRoot.getChildren().remove(planets.get(0).getGraphic());
                         playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
                         planets.remove(planets.get(0));
+                        roundOneTrack.stop();
+                    } else if (planets.get(0).getXPos() < 0 && !carl.collidesWith(planets.get(0))) {
+                        reset();
+                    }
+
+
+                    checkLife(); //Checks when the lives hit 0
+
+                }
+
+                if(level == 2) {
+
+                    if(roundInitial == 1){
+                        asteroids.clear();
+                        lifeUp.clear();
+                        planets.clear();
+
+                        numOfAsteroids = 90;
+                        numOfLifeUp  = 3;
+                        lowSpeed = 5;
+                        roundTwoTrack.play();
+
+
+                        //Add asteroids with bounded random x and random y positions
+                        for(int i = 0; i < numOfAsteroids; i++){
+                            try {
+                                asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        //Add life-up with bounded random x and random y positions
+                        for(int i = 0; i < numOfLifeUp; i++){
+                            try {
+                                lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        try {
+                            planets.add(new Planet("images/planet2.png",1280,360));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        playRoot.getChildren().add(planets.get(0).getHitbox());
+                        playRoot.getChildren().add(planets.get(0).getGraphic());
+
+
+                        //Add the asteroids onto the screen
+                        for(Asteroid a : asteroids){
+                            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
+                            playRoot.getChildren().add(a.getGraphic());
+                        }
+
+                        //Add the life-up onto the screen
+                        for(LifeUp l : lifeUp){
+                            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
+                            playRoot.getChildren().add(l.getGraphic());
+                        }
+
+
+
+                        roundInitial++;
+                    }
+
+                    int speed = rand.nextInt(15 - lowSpeed) + lowSpeed;
+
+
+                    //Carl updates
+                    carl.draw();
+                    carl.updateHitbox();
+
+
+                    //Screen bounds
+                    if (carl.getYPos() < 0) {
+                        carl.setYPos(0);
+                    }
+                    if (carl.getYPos() + carl.getHeight() > 720) {
+                        carl.setYPos(669);
+                    }
+
+                    //Asteroid updates
+                    for (int i = 0; i < asteroids.size(); i++) {
+                        asteroids.get(i).updateHitbox();
+                        asteroids.get(i).draw();
+                        asteroids.get(i).move(speed);
+
+                        //Remove asteroids when it goes off the left side
+                        if (asteroids.get(i).getXPos() < -100) {
+                            playRoot.getChildren().remove(asteroids.get(i).getGraphic());
+                            asteroids.remove(i);
+                        }
+
+                    }
+
+                    //LifeUp updates
+                    for (int i = 0; i < lifeUp.size(); i++) {
+                        lifeUp.get(i).updateHitbox();
+                        lifeUp.get(i).draw();
+                        lifeUp.get(i).move(speed);
+
+                        //Remove life-up when it goes off the left side
+                        if (lifeUp.get(i).getXPos() < -100) {
+                            playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
+                            lifeUp.remove(i);
+                        }
+                    }
+
+                    //Planet 1 updates
+                    planets.get(0).draw();
+
+                    if (asteroids.size() == 0 && lifeUp.size() == 0) {
+                        planets.get(0).updateHitbox();
+                        planets.get(0).move(speed);
+                    }
+
+
+                    //Asteroid collision w/ Carl
+                    for (int i = 0; i < asteroids.size(); i++) {
+                        if (carl.collidesWith(asteroids.get(i))) {
+                            lifeHeart.removeLives();
+                            playRoot.getChildren().remove(asteroids.get(i).getGraphic());
+                            playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
+                            asteroids.remove(i);
+                        }
+                    }
+
+                    //Life-Up collision w/ Carl
+                    for (int i = 0; i < lifeUp.size(); i++) {
+                        if (carl.collidesWith(lifeUp.get(i))) {
+                            lifeHeart.addLives();
+                            playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
+                            playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
+                            lifeUp.remove(i);
+                        }
+                    }
+
+
+                    //Planet collision w/ Carl
+                    if (carl.collidesWith(planets.get(0))) {
+                        level++;
+                        playRoot.getChildren().remove(planets.get(0).getGraphic());
+                        playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
+                        planets.remove(planets.get(0));
+                        roundTwoTrack.stop();
                         //System.exit(0);
+                    } else if (planets.get(0).getXPos() < 0 && !carl.collidesWith(planets.get(0))) {
+                        reset();
+                    }
+
+
+                    checkLife(); //Checks when the lives hit 0
+
+                }
+
+                if(level == 3) {
+
+                    if(roundInitial == 2){
+                        asteroids.clear();
+                        lifeUp.clear();
+                        planets.clear();
+
+                        numOfAsteroids = 120;
+                        numOfLifeUp  = 2;
+                        lowSpeed = 8;
+                        roundThreeTrack.play();
+
+
+                        //Add asteroids with bounded random x and random y positions
+                        for(int i = 0; i < numOfAsteroids; i++){
+                            try {
+                                asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        //Add life-up with bounded random x and random y positions
+                        for(int i = 0; i < numOfLifeUp; i++){
+                            try {
+                                lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        try {
+                            planets.add(new Planet("images/CarlHome.png",1280,360));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        playRoot.getChildren().add(planets.get(0).getHitbox());
+                        playRoot.getChildren().add(planets.get(0).getGraphic());
+
+
+                        //Add the asteroids onto the screen
+                        for(Asteroid a : asteroids){
+                            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
+                            playRoot.getChildren().add(a.getGraphic());
+                        }
+
+                        //Add the life-up onto the screen
+                        for(LifeUp l : lifeUp){
+                            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
+                            playRoot.getChildren().add(l.getGraphic());
+                        }
+
+
+
+                        roundInitial++;
+                    }
+
+                    int speed = rand.nextInt(15 - lowSpeed) + lowSpeed;
+
+
+                    //Carl updates
+                    carl.draw();
+                    carl.updateHitbox();
+
+
+                    //Screen bounds
+                    if (carl.getYPos() < 0) {
+                        carl.setYPos(0);
+                    }
+                    if (carl.getYPos() + carl.getHeight() > 720) {
+                        carl.setYPos(669);
+                    }
+
+                    //Asteroid updates
+                    for (int i = 0; i < asteroids.size(); i++) {
+                        asteroids.get(i).updateHitbox();
+                        asteroids.get(i).draw();
+                        asteroids.get(i).move(speed);
+
+                        //Remove asteroids when it goes off the left side
+                        if (asteroids.get(i).getXPos() < -100) {
+                            playRoot.getChildren().remove(asteroids.get(i).getGraphic());
+                            asteroids.remove(i);
+                        }
+
+                    }
+
+                    //LifeUp updates
+                    for (int i = 0; i < lifeUp.size(); i++) {
+                        lifeUp.get(i).updateHitbox();
+                        lifeUp.get(i).draw();
+                        lifeUp.get(i).move(speed);
+
+                        //Remove life-up when it goes off the left side
+                        if (lifeUp.get(i).getXPos() < -100) {
+                            playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
+                            lifeUp.remove(i);
+                        }
+                    }
+
+                    //Planet 1 updates
+                    planets.get(0).draw();
+
+                    if (asteroids.size() == 0 && lifeUp.size() == 0) {
+                        planets.get(0).updateHitbox();
+                        planets.get(0).move(speed);
+                    }
+
+
+                    //Asteroid collision w/ Carl
+                    for (int i = 0; i < asteroids.size(); i++) {
+                        if (carl.collidesWith(asteroids.get(i))) {
+                            lifeHeart.removeLives();
+                            playRoot.getChildren().remove(asteroids.get(i).getGraphic());
+                            playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
+                            asteroids.remove(i);
+                        }
+                    }
+
+                    //Life-Up collision w/ Carl
+                    for (int i = 0; i < lifeUp.size(); i++) {
+                        if (carl.collidesWith(lifeUp.get(i))) {
+                            lifeHeart.addLives();
+                            playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
+                            playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
+                            lifeUp.remove(i);
+                        }
+                    }
+
+
+                    //Planet collision w/ Carl
+                    if (carl.collidesWith(planets.get(0))) {
+                        level++;
+                        playRoot.getChildren().remove(planets.get(0).getGraphic());
+                        playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
+                        planets.remove(planets.get(0));
+                        roundThreeTrack.stop();
+
+                        primaryStage.setScene(gameOverScene);
+                        t.stop();
+                        playRoot.getChildren().clear();
+
                     } else if (planets.get(0).getXPos() < 0 && !carl.collidesWith(planets.get(0))) {
                         reset();
                     }
@@ -213,14 +575,16 @@ public class GameStructure {
     }
 
     public void reset(){
-        backgroundSound.stop();
+        roundOneTrack.stop();
+        roundTwoTrack.stop();
+        roundThreeTrack.stop();
         primaryStage.setScene(gameOverScene);
         t.stop();
         playRoot.getChildren().clear();
     }
 
-    public int getLevel(){
-        return level;
+    public void setLevel(int level){
+        this.level = level;
     }
 
     public EventHandler<ActionEvent> getHandler(){
@@ -235,8 +599,14 @@ public class GameStructure {
         return t;
     }
 
-    public MediaPlayer getSound(){
-        return backgroundSound;
+    public MediaPlayer getRoundOneTrack(){
+        return roundOneTrack;
+    }
+    public MediaPlayer getRoundTwoTrack(){
+        return roundTwoTrack;
+    }
+    public MediaPlayer getRoundThreeTrack(){
+        return roundThreeTrack;
     }
 
 }
