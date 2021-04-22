@@ -47,7 +47,7 @@ public class GameStructure {
 
 
 
-    public GameStructure(Stage primaryStage, Scene gameOverScene, Pane playRoot, Carl carl, Random rand) throws FileNotFoundException {
+    public GameStructure(Stage primaryStage, Scene gameOverScene, Scene winScene, Pane playRoot, Carl carl, Random rand) throws FileNotFoundException {
         this.primaryStage = primaryStage;
         this.gameOverScene = gameOverScene;
         this.playRoot = playRoot;
@@ -406,9 +406,9 @@ public class GameStructure {
                         lifeUp.clear();
                         planets.clear();
 
-                        numOfAsteroids = 120;
+                        numOfAsteroids = 90;
                         numOfLifeUp  = 2;
-                        lowSpeed = 8;
+                        lowSpeed = 9;
                         roundThreeTrack.play();
 
 
@@ -539,7 +539,7 @@ public class GameStructure {
                         planets.remove(planets.get(0));
                         roundThreeTrack.stop();
 
-                        primaryStage.setScene(gameOverScene);
+                        primaryStage.setScene(winScene);
                         t.stop();
                         playRoot.getChildren().clear();
 
@@ -575,6 +575,7 @@ public class GameStructure {
     }
 
     public void reset(){
+        this.level = 1;
         roundOneTrack.stop();
         roundTwoTrack.stop();
         roundThreeTrack.stop();

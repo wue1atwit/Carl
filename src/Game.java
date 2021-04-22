@@ -105,8 +105,7 @@ public class Game extends Application {
 		StackPane gameOverRoot = new StackPane();
 		Pane gameOverCarl = new Pane();
 		gameOverRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
-		Image img = new Image(new FileInputStream("images/gameOverCarl.png"));
-		ImageView gameOverImage = new ImageView(img);
+		ImageView gameOverImage = new ImageView(new Image(new FileInputStream("images/gameOverCarl.png")));
 
 		Button mainMenuButton = new Button("Main Menu");
 		mainMenuButton.setPrefSize(250,50);
@@ -130,7 +129,34 @@ public class Game extends Application {
 		goButtons.setAlignment(Pos.CENTER);
 		goItems.setAlignment(Pos.CENTER);
 
+		/**
+		 * Win Screen
+		 */
 
+		StackPane winRoot = new StackPane();
+		Pane winCarl = new Pane();
+		winRoot.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream("images/planetScape.jpg")),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+		ImageView winImage = new ImageView(new Image(new FileInputStream("images/Win.png")));
+
+		Button mainMenuButtonWin = new Button("Main Menu");
+		mainMenuButtonWin.setPrefSize(250,50);
+		mainMenuButtonWin.setFont(smallFont);
+
+		Button exitButtonWin = new Button("Exit");
+		exitButtonWin.setPrefSize(250,50);
+		exitButtonWin.setFont(smallFont);
+
+		VBox winItems = new VBox(50);
+		HBox winButtons = new HBox(10);
+
+		winButtons.getChildren().addAll(mainMenuButtonWin,exitButtonWin);
+		winItems.getChildren().addAll(winImage,winButtons);
+
+		winCarl.getChildren().addAll(winItems);
+		Group groupWin = new Group(winCarl);
+		winRoot.getChildren().add(groupWin);
+		winButtons.setAlignment(Pos.CENTER);
+		winItems.setAlignment(Pos.CENTER);
 
 		Scene homeScene = new Scene(homeRoot,1280,720);
 		Scene playScene = new Scene(playRoot, 1280,720);
@@ -146,22 +172,28 @@ public class Game extends Application {
 			carl.resetPos(); //Resets Carl's X Position to 360
 
 			try {
-				gameStructure = new GameStructure(primaryStage,gameOverScene,playRoot,carl,rand);
-//				if(gameStructure.getLevel() == 2){
-//					gameStructure = new GameStructure(primaryStage,gameOverScene,playRoot,carl,rand,5,2,10);
-//				}
+				gameStructure = new GameStructure(primaryStage,gameOverScene,winScene,playRoot,carl,rand);
+
 			} catch (FileNotFoundException exception) {
 			}
 
 			primaryStage.setScene(playScene);
 		});
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
-		creditButton.setOnAction(e -> primaryStage.setScene(gameOverScene));
+		creditButton.setOnAction(e -> primaryStage.setScene(winScene));
 		exitHomeButton.setOnAction(event -> primaryStage.close());
 
 		//Game Over Buttons
 		exitGOButton.setOnAction(e -> primaryStage.close());
 		mainMenuButton.setOnAction(event -> {
+			primaryStage.setScene(homeScene);
+			remove(playRoot);
+
+		});
+
+		//Win Buttons
+		exitButtonWin.setOnAction(e -> primaryStage.close());
+		mainMenuButtonWin.setOnAction(event -> {
 			primaryStage.setScene(homeScene);
 			remove(playRoot);
 
