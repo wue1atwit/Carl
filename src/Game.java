@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.Label;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,6 +28,7 @@ import java.util.Random;
 public class Game extends Application {
 
 
+	final Font bigFont = Font.font("OCR A Extended", 48);
 	final Font baseFont = Font.font("OCR A Extended", 36);
 	final Font smallFont = Font.font("OCR A Extended",20);
 
@@ -85,7 +87,7 @@ public class Game extends Application {
 		 * How to Play Screen
 		 */
 		StackPane htpRoot = new StackPane();
-		Button exitHTPButton = new Button("Exit");
+		Button exitHTPButton = new Button("Main Menu");
 		exitHTPButton.setPrefSize(200,50);
 		exitHTPButton.setFont(smallFont);
 
@@ -112,6 +114,39 @@ public class Game extends Application {
 		htpRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 
 		/**
+		 * Credit Screen
+		 */
+		StackPane creditRoot = new StackPane();
+		creditRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+
+		Button mainMenuButtonCredit = new Button("Main Menu");
+		mainMenuButtonCredit.setPrefSize(250,50);
+		mainMenuButtonCredit.setFont(smallFont);
+
+
+		Label credit = new Label("CREDIT:");
+		credit.setFont(bigFont);
+		credit.setTextFill(Color.WHITE);
+
+		Label creditLabel = new Label("Ethan Wu, Ryan Baggett, Kristina Arabatzis");
+		creditLabel.setFont(baseFont);
+		creditLabel.setTextFill(Color.WHITE);
+
+		Label carlLabel = new Label("Special thanks to Carl :)");
+		carlLabel.setFont(smallFont);
+		carlLabel.setTextFill(Color.WHITE);
+
+		VBox creditItems = new VBox(50);
+		HBox creditButtons = new HBox(10);
+
+		creditButtons.getChildren().addAll(mainMenuButtonCredit);
+		creditItems.getChildren().addAll(credit,creditLabel,carlLabel,creditButtons);
+
+		creditRoot.getChildren().addAll(creditItems);
+		creditButtons.setAlignment(Pos.CENTER);
+		creditItems.setAlignment(Pos.CENTER);
+
+		/**
 		 * Play Screen
 		 */
 		Pane playRoot = new Pane();
@@ -133,7 +168,6 @@ public class Game extends Application {
 		Button exitGOButton = new Button("Exit");
 		exitGOButton.setPrefSize(250,50);
 		exitGOButton.setFont(smallFont);
-
 
 		VBox goItems = new VBox(50);
 		HBox goButtons = new HBox(10);
@@ -181,6 +215,7 @@ public class Game extends Application {
 		Scene htpScene = new Scene(htpRoot,1280,720);
 		Scene gameOverScene = new Scene(gameOverRoot,1280,720);
 		Scene winScene = new Scene(winRoot,1280,720);
+		Scene creditScene = new Scene(creditRoot, 1280, 720);
 
 		primaryStage.setScene(homeScene);
 
@@ -198,8 +233,15 @@ public class Game extends Application {
 			primaryStage.setScene(playScene);
 		});
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
-		creditButton.setOnAction(e -> primaryStage.setScene(winScene));
+		creditButton.setOnAction(e -> primaryStage.setScene(creditScene));
 		exitHomeButton.setOnAction(event -> primaryStage.close());
+
+		//Credit Buttons
+		mainMenuButtonCredit.setOnAction(event -> {
+			primaryStage.setScene(homeScene);
+			remove(playRoot);
+		});
+
 
 		//Game Over Buttons
 		exitGOButton.setOnAction(e -> primaryStage.close());

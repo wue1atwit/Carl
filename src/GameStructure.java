@@ -413,13 +413,13 @@ public class GameStructure {
 
                         //Add the asteroids onto the screen
                         for(Asteroid a : asteroids){
-                            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
                             playRoot.getChildren().add(a.getGraphic());
                         }
 
                         //Add the life-up onto the screen
                         for(LifeUp l : lifeUp){
-                            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
                             playRoot.getChildren().add(l.getGraphic());
                         }
 
@@ -485,7 +485,7 @@ public class GameStructure {
                         if (carl.collidesWith(asteroids.get(i))) {
                             lifeHeart.removeLives();
                             playRoot.getChildren().remove(asteroids.get(i).getGraphic());
-                            playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
                             asteroids.remove(i);
                         }
                     }
@@ -495,7 +495,7 @@ public class GameStructure {
                         if (carl.collidesWith(lifeUp.get(i))) {
                             lifeHeart.addLives();
                             playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
-                            playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
                             lifeUp.remove(i);
                         }
                     }
@@ -505,7 +505,7 @@ public class GameStructure {
                     if (carl.collidesWith(planets.get(0))) {
                         level = 1;
                         playRoot.getChildren().remove(planets.get(0).getGraphic());
-                        playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
+                        //playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
                         planets.remove(planets.get(0));
                         roundThreeTrack.stop();
 
