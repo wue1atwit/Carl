@@ -159,7 +159,7 @@ public class Game extends Application {
 		creditButton.setOnAction(e -> primaryStage.setScene(gameOverScene));
 		exitHomeButton.setOnAction(event -> primaryStage.close());
 
-		//Game Over Buttoms
+		//Game Over Buttons
 		exitGOButton.setOnAction(e -> primaryStage.close());
 		mainMenuButton.setOnAction(event -> {
 			primaryStage.setScene(homeScene);
