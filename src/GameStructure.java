@@ -18,6 +18,7 @@ public class GameStructure {
 
     private Stage primaryStage;
     private Scene gameOverScene;
+    private Scene winRoot;
     private Pane playRoot;
     private Timeline t;
     private Random rand;
@@ -50,6 +51,7 @@ public class GameStructure {
     public GameStructure(Stage primaryStage, Scene gameOverScene, Scene winScene, Pane playRoot, Carl carl, Random rand) throws FileNotFoundException {
         this.primaryStage = primaryStage;
         this.gameOverScene = gameOverScene;
+        this.winRoot = winRoot;
         this.playRoot = playRoot;
         this.rand = rand;
 
@@ -533,7 +535,7 @@ public class GameStructure {
 
                     //Planet collision w/ Carl
                     if (carl.collidesWith(planets.get(0))) {
-                        level++;
+                        level = 1;
                         playRoot.getChildren().remove(planets.get(0).getGraphic());
                         playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
                         planets.remove(planets.get(0));

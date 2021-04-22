@@ -162,7 +162,7 @@ public class Game extends Application {
 		Scene playScene = new Scene(playRoot, 1280,720);
 		Scene htpScene = new Scene(htpRoot,1280,720);
 		Scene gameOverScene = new Scene(gameOverRoot,1280,720);
-
+		Scene winScene = new Scene(winRoot,1280,720);
 
 		primaryStage.setScene(homeScene);
 
