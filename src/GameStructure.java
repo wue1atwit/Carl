@@ -228,7 +228,7 @@ public class GameStructure {
                         planets.clear();
 
                         numOfAsteroids = 90;
-                        numOfLifeUp  = 3;
+                        numOfLifeUp  = 2;
                         lowSpeed = 5;
                         roundTwoTrack.play();
 
@@ -377,8 +377,8 @@ public class GameStructure {
                         planets.clear();
 
                         numOfAsteroids = 90;
-                        numOfLifeUp  = 2;
-                        lowSpeed = 9;
+                        numOfLifeUp  = 1;
+                        lowSpeed = 13;
                         roundThreeTrack.play();
 
 

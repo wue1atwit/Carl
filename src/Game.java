@@ -95,16 +95,20 @@ public class Game extends Application {
 		ImageView htp2 = new ImageView(new Image(new FileInputStream("images/htp2.png")));
 		ImageView htp3 = new ImageView(new Image(new FileInputStream("images/htp3.png")));
 
+		Label htpLabel = new Label("HOW TO PLAY");
+		htpLabel.setFont(bigFont);
+		htpLabel.setTextFill(Color.WHITE);
+
 		VBox htpItems = new VBox(10);
 		HBox htpFrames = new HBox(10);
 		HBox htpButtons = new HBox(10);
 
-		//Group htpGroup = new Group();
 
 		htpFrames.getChildren().addAll(htp1,htp2,htp3);
 		htpButtons.getChildren().add(exitHTPButton);
-		htpItems.getChildren().addAll(htpFrames,htpButtons);
+		htpItems.getChildren().addAll(htpLabel,htpFrames,htpButtons);
 
+		htpItems.setAlignment(Pos.CENTER);
 		htpFrames.setAlignment(Pos.CENTER);
 		htpButtons.setAlignment(Pos.CENTER);
 
@@ -217,7 +221,7 @@ public class Game extends Application {
 		Scene winScene = new Scene(winRoot,1280,720);
 		Scene creditScene = new Scene(creditRoot, 1280, 720);
 
-		primaryStage.setScene(homeScene);
+		primaryStage.setScene(homeScene); //Initial scene
 
 
 		//Button Interactions
@@ -239,7 +243,6 @@ public class Game extends Application {
 		//Credit Buttons
 		mainMenuButtonCredit.setOnAction(event -> {
 			primaryStage.setScene(homeScene);
-			remove(playRoot);
 		});
 
 
