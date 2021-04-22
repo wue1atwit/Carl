@@ -21,6 +21,7 @@ public class GameStructure {
     private Scene gameOverScene;
     private Pane playRoot;
     private Timeline t;
+    private Random rand;
 
     MediaPlayer backgroundSound = new MediaPlayer(new Media(new File("sound/io1.mp3").toURI().toString()));
 
@@ -29,6 +30,8 @@ public class GameStructure {
 
     private static ArrayList<Asteroid> asteroids = new ArrayList<>();
     private static ArrayList<LifeUp> lifeUp = new ArrayList<>();
+    private static ArrayList<Planet> planets = new ArrayList<>();
+
     private EventHandler<ActionEvent> handler;
 
     LifeHeart lifeHeart = new LifeHeart(3);
@@ -45,17 +48,16 @@ public class GameStructure {
         this.primaryStage = primaryStage;
         this.gameOverScene = gameOverScene;
         this.playRoot = playRoot;
-        this.t = t;
-
+        this.rand = rand;
 
 
         backgroundSound.play();
 
         asteroids.clear();
         lifeUp.clear();
+        planets.clear();
 
         playRoot.getChildren().add(lifeHeart.getGraphic()); //Adds the hearts to the screen
-
 
         //Add asteroids with bounded random x and random y positions
         for(int i = 0; i < numOfAsteroids; i++){
@@ -66,6 +68,14 @@ public class GameStructure {
         for(int i = 0; i < numOfLifeUp; i++){
             lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
         }
+
+        planets.add(new Planet("images/planet1.png",1280,360));
+        //planets.add(new Planet("planet2.png",1280,360));
+        //planets.add(new Planet("planet3.png",1280,360));
+
+        playRoot.getChildren().add(planets.get(0).getHitbox());
+        playRoot.getChildren().add(planets.get(0).getGraphic());
+
 
         //Add the asteroids onto the screen
         for(Asteroid a : asteroids){
@@ -89,71 +99,99 @@ public class GameStructure {
             @Override
             public void handle(ActionEvent event) {
 
+                if(level == 1) {
 
-                int speed = rand.nextInt(15-lowSpeed)+lowSpeed;
-
-
-                carl.draw();
-                carl.updateHitbox();
+                    int speed = rand.nextInt(15 - lowSpeed) + lowSpeed;
 
 
-                //Screen bounds
-                if(carl.getYPos() < 0){
-                    carl.setYPos(0);
-                }
-                if(carl.getYPos()+carl.getHeight() > 720){
-                    carl.setYPos(669);
-                }
+                    //Carl updates
+                    carl.draw();
+                    carl.updateHitbox();
 
-                //Asteroid updates
-                for(int i = 0; i < asteroids.size(); i++){
-                    asteroids.get(i).updateHitbox();
-                    asteroids.get(i).draw();
-                    asteroids.get(i).move(speed);
 
-                    //Remove asteroids when it goes off the left side
-                    if(asteroids.get(i).getXPos() < -100){
-                        playRoot.getChildren().remove(asteroids.get(i).getGraphic());
-                        asteroids.remove(i);
+                    //Screen bounds
+                    if (carl.getYPos() < 0) {
+                        carl.setYPos(0);
+                    }
+                    if (carl.getYPos() + carl.getHeight() > 720) {
+                        carl.setYPos(669);
                     }
 
-                }
+                    //Asteroid updates
+                    for (int i = 0; i < asteroids.size(); i++) {
+                        asteroids.get(i).updateHitbox();
+                        asteroids.get(i).draw();
+                        asteroids.get(i).move(speed);
 
-                //LifeUp updates
-                for(int i = 0; i < lifeUp.size(); i++){
-                    lifeUp.get(i).updateHitbox();
-                    lifeUp.get(i).draw();
-                    lifeUp.get(i).move(speed);
+                        //Remove asteroids when it goes off the left side
+                        if (asteroids.get(i).getXPos() < -100) {
+                            playRoot.getChildren().remove(asteroids.get(i).getGraphic());
+                            asteroids.remove(i);
+                        }
 
-                    //Remove life-up when it goes off the left side
-                    if(lifeUp.get(i).getXPos() < -100){
-                        playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
-                        lifeUp.remove(i);
                     }
-                }
 
-                //Life-Up collision w/ Carl
-                for(int i = 0; i < lifeUp.size(); i++) {
-                    if (carl.collidesWith(lifeUp.get(i))) {
-                        lifeHeart.addLives();
-                        playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
-                        playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
-                        lifeUp.remove(i);
+                    //LifeUp updates
+                    for (int i = 0; i < lifeUp.size(); i++) {
+                        lifeUp.get(i).updateHitbox();
+                        lifeUp.get(i).draw();
+                        lifeUp.get(i).move(speed);
+
+                        //Remove life-up when it goes off the left side
+                        if (lifeUp.get(i).getXPos() < -100) {
+                            playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
+                            lifeUp.remove(i);
+                        }
                     }
-                }
 
-                //Asteroid collision w/ Carl
-                for(int i = 0; i < asteroids.size(); i++){
-                    if(carl.collidesWith(asteroids.get(i))){
-                        lifeHeart.removeLives();
-                        playRoot.getChildren().remove(asteroids.get(i).getGraphic());
-                        playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
-                        asteroids.remove(i);
+                    //Planet 1 updates
+                    planets.get(0).draw();
+
+                    if (asteroids.size() == 0 && lifeUp.size() == 0) {
+                        planets.get(0).updateHitbox();
+                        planets.get(0).move(speed);
                     }
+
+
+                    //Asteroid collision w/ Carl
+                    for (int i = 0; i < asteroids.size(); i++) {
+                        if (carl.collidesWith(asteroids.get(i))) {
+                            lifeHeart.removeLives();
+                            playRoot.getChildren().remove(asteroids.get(i).getGraphic());
+                            playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
+                            asteroids.remove(i);
+                        }
+                    }
+
+                    //Life-Up collision w/ Carl
+                    for (int i = 0; i < lifeUp.size(); i++) {
+                        if (carl.collidesWith(lifeUp.get(i))) {
+                            lifeHeart.addLives();
+                            playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
+                            playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
+                            lifeUp.remove(i);
+                        }
+                    }
+
+
+                    //Planet collision w/ Carl
+                    if (carl.collidesWith(planets.get(0))) {
+                        level++;
+                        playRoot.getChildren().remove(planets.get(0).getGraphic());
+                        playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
+                        planets.remove(planets.get(0));
+                        //System.exit(0);
+                    } else if (planets.get(0).getXPos() < 0 && !carl.collidesWith(planets.get(0))) {
+                        reset();
+                    }
+
+
+                    checkLife(); //Checks when the lives hit 0
+
                 }
 
 
-                checkLevelEnd(); //Checks when the level ends
+
 
             }
         };
@@ -166,19 +204,19 @@ public class GameStructure {
 
     }
 
+
     //Level ends when there is no more asteroids or when lives/hearts equals 0
-    public void checkLevelEnd(){
-        System.out.println(lifeHeart.getLives());
-        if(asteroids.size() == 0 && lifeUp.size() == 0){
-            level++;
-            System.exit(0);
-        }
+    public void checkLife(){
         if(lifeHeart.getLives() == 0){
-            backgroundSound.stop();
-            primaryStage.setScene(gameOverScene);
-            t.stop();
-            playRoot.getChildren().clear();
+            reset();
         }
+    }
+
+    public void reset(){
+        backgroundSound.stop();
+        primaryStage.setScene(gameOverScene);
+        t.stop();
+        playRoot.getChildren().clear();
     }
 
     public int getLevel(){

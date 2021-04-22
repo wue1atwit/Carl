@@ -147,6 +147,9 @@ public class Game extends Application {
 
 			try {
 				gameStructure = new GameStructure(primaryStage,gameOverScene,playRoot,carl,rand);
+//				if(gameStructure.getLevel() == 2){
+//					gameStructure = new GameStructure(primaryStage,gameOverScene,playRoot,carl,rand,5,2,10);
+//				}
 			} catch (FileNotFoundException exception) {
 			}
 
@@ -184,10 +187,10 @@ public class Game extends Application {
 				primaryStage.setScene(homeScene);
 				remove(playRoot);
 			}
-			if(e.getCode() == KeyCode.DELETE){
+			if(e.getCode() == KeyCode.DELETE){ //Debug(keys)
 				gameStructure.getLifeHeart().removeLives();
 			}
-			if(e.getCode() == KeyCode.INSERT){
+			if(e.getCode() == KeyCode.INSERT){ //Debug(keys)
 				gameStructure.getLifeHeart().addLives();
 			}
 		});
