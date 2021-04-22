@@ -89,7 +89,26 @@ public class Game extends Application {
 		exitHTPButton.setPrefSize(200,50);
 		exitHTPButton.setFont(smallFont);
 
-		htpRoot.getChildren().addAll(exitHTPButton);
+		ImageView htp1 = new ImageView(new Image(new FileInputStream("images/htp1.png")));
+		ImageView htp2 = new ImageView(new Image(new FileInputStream("images/htp2.png")));
+		ImageView htp3 = new ImageView(new Image(new FileInputStream("images/htp3.png")));
+
+		VBox htpItems = new VBox(10);
+		HBox htpFrames = new HBox(10);
+		HBox htpButtons = new HBox(10);
+
+		//Group htpGroup = new Group();
+
+		htpFrames.getChildren().addAll(htp1,htp2,htp3);
+		htpButtons.getChildren().add(exitHTPButton);
+		htpItems.getChildren().addAll(htpFrames,htpButtons);
+
+		htpFrames.setAlignment(Pos.CENTER);
+		htpButtons.setAlignment(Pos.CENTER);
+
+
+
+		htpRoot.getChildren().addAll(htpItems);
 		htpRoot.setBackground(new Background(new BackgroundImage(backgImg,BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 
 		/**
@@ -132,7 +151,6 @@ public class Game extends Application {
 		/**
 		 * Win Screen
 		 */
-
 		StackPane winRoot = new StackPane();
 		Pane winCarl = new Pane();
 		winRoot.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream("images/planetScape.jpg")),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
@@ -231,6 +249,7 @@ public class Game extends Application {
 		});
 
 
+		primaryStage.setTitle("The Adventures of Carl");
 		primaryStage.getIcons().add(new Image(new FileInputStream("images/cIcon.png")));
 		primaryStage.setResizable(false);
 		primaryStage.show();

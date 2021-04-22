@@ -25,7 +25,7 @@ public class GameStructure {
 
     MediaPlayer roundOneTrack = new MediaPlayer(new Media(new File("sound/io1.mp3").toURI().toString()));
     MediaPlayer roundTwoTrack = new MediaPlayer(new Media(new File("sound/io2.mp3").toURI().toString()));
-    MediaPlayer roundThreeTrack = new MediaPlayer(new Media(new File("sound/io3.mp3").toURI().toString()));
+    MediaPlayer roundThreeTrack = new MediaPlayer(new Media(new File("sound/Chiptronical.mp3").toURI().toString()));
 
 
     private static int level = 1;
@@ -56,46 +56,14 @@ public class GameStructure {
         this.rand = rand;
 
 
-//        roundOneTrack.play();
-
         asteroids.clear();
         lifeUp.clear();
         planets.clear();
 
         playRoot.getChildren().add(lifeHeart.getGraphic()); //Adds the hearts to the screen
 
-//        //Add asteroids with bounded random x and random y positions
-//        for(int i = 0; i < numOfAsteroids; i++){
-//            asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
-//        }
-//
-//        //Add life-up with bounded random x and random y positions
-//        for(int i = 0; i < numOfLifeUp; i++){
-//            lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
-//        }
-//
-//        planets.add(new Planet("images/planet1.png",1280,360));
-//        //planets.add(new Planet("planet2.png",1280,360));
-//        //planets.add(new Planet("planet3.png",1280,360));
-//
-//        playRoot.getChildren().add(planets.get(0).getHitbox());
-//        playRoot.getChildren().add(planets.get(0).getGraphic());
-//
-//
-//        //Add the asteroids onto the screen
-//        for(Asteroid a : asteroids){
-//            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
-//            playRoot.getChildren().add(a.getGraphic());
-//        }
-//
-//        //Add the life-up onto the screen
-//        for(LifeUp l : lifeUp){
-//            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
-//            playRoot.getChildren().add(l.getGraphic());
-//        }
-
         //Add Carl onto the screen
-        playRoot.getChildren().add(carl.getHitbox()); //Debug(hitbox outline)
+        //playRoot.getChildren().add(carl.getHitbox()); //Debug(hitbox outline)
         playRoot.getChildren().add(carl.getGraphic());
 
 
@@ -142,19 +110,19 @@ public class GameStructure {
                         }
 
 
-                        playRoot.getChildren().add(planets.get(0).getHitbox());
+                        //playRoot.getChildren().add(planets.get(0).getHitbox()); //Debug(hitbox outline)
                         playRoot.getChildren().add(planets.get(0).getGraphic());
 
 
                         //Add the asteroids onto the screen
                         for(Asteroid a : asteroids){
-                            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
                             playRoot.getChildren().add(a.getGraphic());
                         }
 
                         //Add the life-up onto the screen
                         for(LifeUp l : lifeUp){
-                            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
                             playRoot.getChildren().add(l.getGraphic());
                         }
 
@@ -220,7 +188,7 @@ public class GameStructure {
                         if (carl.collidesWith(asteroids.get(i))) {
                             lifeHeart.removeLives();
                             playRoot.getChildren().remove(asteroids.get(i).getGraphic());
-                            playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
                             asteroids.remove(i);
                         }
                     }
@@ -230,7 +198,7 @@ public class GameStructure {
                         if (carl.collidesWith(lifeUp.get(i))) {
                             lifeHeart.addLives();
                             playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
-                            playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
                             lifeUp.remove(i);
                         }
                     }
@@ -240,7 +208,7 @@ public class GameStructure {
                     if (carl.collidesWith(planets.get(0))) {
                         level++;
                         playRoot.getChildren().remove(planets.get(0).getGraphic());
-                        playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
+                        //playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
                         planets.remove(planets.get(0));
                         roundOneTrack.stop();
                     } else if (planets.get(0).getXPos() < 0 && !carl.collidesWith(planets.get(0))) {
@@ -290,19 +258,19 @@ public class GameStructure {
                         }
 
 
-                        playRoot.getChildren().add(planets.get(0).getHitbox());
+                        //playRoot.getChildren().add(planets.get(0).getHitbox()); //Debug(hitbox outline)
                         playRoot.getChildren().add(planets.get(0).getGraphic());
 
 
                         //Add the asteroids onto the screen
                         for(Asteroid a : asteroids){
-                            playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().add(a.getHitbox()); //Debug(hitbox outline)
                             playRoot.getChildren().add(a.getGraphic());
                         }
 
                         //Add the life-up onto the screen
                         for(LifeUp l : lifeUp){
-                            playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().add(l.getHitbox()); //Debug(hitbox outline)
                             playRoot.getChildren().add(l.getGraphic());
                         }
 
@@ -368,7 +336,7 @@ public class GameStructure {
                         if (carl.collidesWith(asteroids.get(i))) {
                             lifeHeart.removeLives();
                             playRoot.getChildren().remove(asteroids.get(i).getGraphic());
-                            playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
                             asteroids.remove(i);
                         }
                     }
@@ -378,7 +346,7 @@ public class GameStructure {
                         if (carl.collidesWith(lifeUp.get(i))) {
                             lifeHeart.addLives();
                             playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
-                            playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
+                            //playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
                             lifeUp.remove(i);
                         }
                     }
@@ -388,7 +356,7 @@ public class GameStructure {
                     if (carl.collidesWith(planets.get(0))) {
                         level++;
                         playRoot.getChildren().remove(planets.get(0).getGraphic());
-                        playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
+                        //playRoot.getChildren().remove(planets.get(0).getHitbox()); //Debug(hitbox outline)
                         planets.remove(planets.get(0));
                         roundTwoTrack.stop();
                         //System.exit(0);
@@ -439,7 +407,7 @@ public class GameStructure {
                         }
 
 
-                        playRoot.getChildren().add(planets.get(0).getHitbox());
+                        //playRoot.getChildren().add(planets.get(0).getHitbox()); //Debug(hitbox outline)
                         playRoot.getChildren().add(planets.get(0).getGraphic());
 
 
