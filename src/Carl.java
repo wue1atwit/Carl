@@ -40,10 +40,6 @@ public class Carl extends Sprite{
 
     }
 
-    public Rectangle getHitbox(){
-        return hitbox;
-    }
-
     public double getHeight(){
         return height;
     }

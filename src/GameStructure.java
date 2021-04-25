@@ -199,7 +199,7 @@ public class GameStructure {
                     for (int i = 0; i < asteroids.size(); i++) {
                         if (carl.collidesWith(asteroids.get(i))) {
                             boomSound.play();
-                            lifeHeart.removeLives();
+                            //lifeHeart.removeLives();
                             playRoot.getChildren().remove(asteroids.get(i).getGraphic());
                             //playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
                             asteroids.remove(i);
