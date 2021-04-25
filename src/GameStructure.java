@@ -243,7 +243,7 @@ public class GameStructure {
 
                         numOfAsteroids = 90;
                         numOfLifeUp  = 2;
-                        lowSpeed = 5;
+                        lowSpeed = 7;
                         roundTwoTrack.play();
                         roundTwoTrack.setVolume(0.5);
 
@@ -401,8 +401,8 @@ public class GameStructure {
                         lifeUp.clear();
                         planets.clear();
 
-                        numOfAsteroids = 90;
-                        numOfLifeUp  = 1;
+                        numOfAsteroids = 200;
+                        numOfLifeUp  = 3;
                         lowSpeed = 13;
                         roundThreeTrack.play();
                         roundThreeTrack.setVolume(0.5);
@@ -411,7 +411,7 @@ public class GameStructure {
                         //Add asteroids with bounded random x and random y positions
                         for(int i = 0; i < numOfAsteroids; i++){
                             try {
-                                asteroids.add(new Asteroid(rand.nextInt(10000-1500)+1500,rand.nextInt(720)));
+                                asteroids.add(new Asteroid(rand.nextInt(30000-1500)+1500,rand.nextInt(720)));
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -420,11 +420,11 @@ public class GameStructure {
                         //Add life-up with bounded random x and random y positions
                         for(int i = 0; i < numOfLifeUp; i++){
                             try {
-                                LifeUp lifeUps = new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(580-140)+140);
+                                LifeUp lifeUps = new LifeUp(rand.nextInt(15000-2500)+2500,rand.nextInt(580-140)+140);
 
                                 for(Asteroid a : asteroids){
                                     while(lifeUps.collidesWith(a)){
-                                        lifeUps = new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(580-140)+140);
+                                        lifeUps = new LifeUp(rand.nextInt(15000-2500)+2500,rand.nextInt(580-140)+140);
                                     }
                                 }
 
