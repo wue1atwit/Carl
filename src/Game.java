@@ -54,6 +54,7 @@ public class Game extends Application {
 		Button playButton = new Button("Play");
 		playButton.setPrefSize(200,100);
 		playButton.setFont(baseFont);
+		//ImageView playButton = new ImageView(new Image(new FileInputStream("images/playButton.png")));
 
 		//How to Play Button
 		Button htpButton = new Button("How to Play");
@@ -71,9 +72,11 @@ public class Game extends Application {
 		exitHomeButton.setPrefSize(200,50);
 		exitHomeButton.setFont(smallFont);
 
+		ImageView title = new ImageView(new Image(new FileInputStream("images/Title.png")));
+
 
 		buttons2.getChildren().addAll(htpButton,creditButton);
-		buttons.getChildren().addAll(playButton,buttons2,exitHomeButton);
+		buttons.getChildren().addAll(title,playButton,buttons2,exitHomeButton);
 
 		homeRoot.getChildren().add(buttons);
 		buttons.setAlignment(Pos.CENTER);
@@ -236,6 +239,19 @@ public class Game extends Application {
 
 			primaryStage.setScene(playScene);
 		});
+//		playButton.setOnMouseEntered(e -> {
+//			try {
+//				playButton.setImage(new Image(new FileInputStream("images/toggledPlayButton.png")));
+//			} catch (FileNotFoundException fileNotFoundException) {
+//			}
+//		});
+//		playButton.setOnMouseExited(e -> {
+//			try {
+//				playButton.setImage(new Image(new FileInputStream("images/playButton.png")));
+//			} catch (FileNotFoundException fileNotFoundException) {
+//			}
+//		});
+
 		htpButton.setOnAction(e -> primaryStage.setScene(htpScene));
 		creditButton.setOnAction(e -> primaryStage.setScene(creditScene));
 		exitHomeButton.setOnAction(event -> primaryStage.close());

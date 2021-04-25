@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -26,6 +27,8 @@ public class GameStructure {
     MediaPlayer roundOneTrack = new MediaPlayer(new Media(new File("sound/io1.mp3").toURI().toString()));
     MediaPlayer roundTwoTrack = new MediaPlayer(new Media(new File("sound/io2.mp3").toURI().toString()));
     MediaPlayer roundThreeTrack = new MediaPlayer(new Media(new File("sound/Chiptronical.mp3").toURI().toString()));
+    AudioClip boomSound = new AudioClip(new File("sound/boom2.wav").toURI().toString());
+    AudioClip lifeUpSound = new AudioClip(new File("sound/lifeUp.wav").toURI().toString());
 
 
     private static int level = 1;
@@ -83,6 +86,7 @@ public class GameStructure {
                         numOfLifeUp  = 2;
                         lowSpeed = 5;
                         roundOneTrack.play();
+                        roundOneTrack.setVolume(0.5);
 
 
                         //Add asteroids with bounded random x and random y positions
@@ -186,6 +190,7 @@ public class GameStructure {
                     //Asteroid collision w/ Carl
                     for (int i = 0; i < asteroids.size(); i++) {
                         if (carl.collidesWith(asteroids.get(i))) {
+                            boomSound.play();
                             lifeHeart.removeLives();
                             playRoot.getChildren().remove(asteroids.get(i).getGraphic());
                             //playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
@@ -196,6 +201,7 @@ public class GameStructure {
                     //Life-Up collision w/ Carl
                     for (int i = 0; i < lifeUp.size(); i++) {
                         if (carl.collidesWith(lifeUp.get(i))) {
+                            lifeUpSound.play();
                             lifeHeart.addLives();
                             playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
                             //playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
@@ -231,6 +237,7 @@ public class GameStructure {
                         numOfLifeUp  = 2;
                         lowSpeed = 5;
                         roundTwoTrack.play();
+                        roundTwoTrack.setVolume(0.5);
 
 
                         //Add asteroids with bounded random x and random y positions
@@ -334,6 +341,7 @@ public class GameStructure {
                     //Asteroid collision w/ Carl
                     for (int i = 0; i < asteroids.size(); i++) {
                         if (carl.collidesWith(asteroids.get(i))) {
+                            boomSound.play();
                             lifeHeart.removeLives();
                             playRoot.getChildren().remove(asteroids.get(i).getGraphic());
                             //playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
@@ -344,6 +352,7 @@ public class GameStructure {
                     //Life-Up collision w/ Carl
                     for (int i = 0; i < lifeUp.size(); i++) {
                         if (carl.collidesWith(lifeUp.get(i))) {
+                            lifeUpSound.play();
                             lifeHeart.addLives();
                             playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
                             //playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
@@ -380,6 +389,7 @@ public class GameStructure {
                         numOfLifeUp  = 1;
                         lowSpeed = 13;
                         roundThreeTrack.play();
+                        roundThreeTrack.setVolume(0.5);
 
 
                         //Add asteroids with bounded random x and random y positions
@@ -483,6 +493,7 @@ public class GameStructure {
                     //Asteroid collision w/ Carl
                     for (int i = 0; i < asteroids.size(); i++) {
                         if (carl.collidesWith(asteroids.get(i))) {
+                            boomSound.play();
                             lifeHeart.removeLives();
                             playRoot.getChildren().remove(asteroids.get(i).getGraphic());
                             //playRoot.getChildren().remove(asteroids.get(i).getHitbox()); //Debug(hitbox outline)
@@ -493,6 +504,7 @@ public class GameStructure {
                     //Life-Up collision w/ Carl
                     for (int i = 0; i < lifeUp.size(); i++) {
                         if (carl.collidesWith(lifeUp.get(i))) {
+                            lifeUpSound.play();
                             lifeHeart.addLives();
                             playRoot.getChildren().remove(lifeUp.get(i).getGraphic());
                             //playRoot.getChildren().remove(lifeUp.get(i).getHitbox()); //Debug(hitbox outline)
