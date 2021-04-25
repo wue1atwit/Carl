@@ -27,7 +27,7 @@ public class GameStructure {
     MediaPlayer roundOneTrack = new MediaPlayer(new Media(new File("sound/io1.mp3").toURI().toString()));
     MediaPlayer roundTwoTrack = new MediaPlayer(new Media(new File("sound/io2.mp3").toURI().toString()));
     MediaPlayer roundThreeTrack = new MediaPlayer(new Media(new File("sound/Chiptronical.mp3").toURI().toString()));
-    AudioClip boomSound = new AudioClip(new File("sound/boom2.wav").toURI().toString());
+    AudioClip boomSound = new AudioClip(new File("sound/boom.wav").toURI().toString());
     AudioClip lifeUpSound = new AudioClip(new File("sound/lifeUp.wav").toURI().toString());
 
 
@@ -101,7 +101,15 @@ public class GameStructure {
                         //Add life-up with bounded random x and random y positions
                         for(int i = 0; i < numOfLifeUp; i++){
                             try {
-                                lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
+                                LifeUp lifeUps = new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(580-140)+140);
+
+                                for(Asteroid a : asteroids){
+                                    while(lifeUps.collidesWith(a)){
+                                        lifeUps = new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(580-140)+140);
+                                    }
+                                }
+
+                                lifeUp.add(lifeUps);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -252,7 +260,15 @@ public class GameStructure {
                         //Add life-up with bounded random x and random y positions
                         for(int i = 0; i < numOfLifeUp; i++){
                             try {
-                                lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
+                                LifeUp lifeUps = new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(580-140)+140);
+
+                                for(Asteroid a : asteroids){
+                                    while(lifeUps.collidesWith(a)){
+                                        lifeUps = new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(580-140)+140);
+                                    }
+                                }
+
+                                lifeUp.add(lifeUps);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
@@ -404,7 +420,15 @@ public class GameStructure {
                         //Add life-up with bounded random x and random y positions
                         for(int i = 0; i < numOfLifeUp; i++){
                             try {
-                                lifeUp.add(new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(380-340)+340));
+                                LifeUp lifeUps = new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(580-140)+140);
+
+                                for(Asteroid a : asteroids){
+                                    while(lifeUps.collidesWith(a)){
+                                        lifeUps = new LifeUp(rand.nextInt(6500-2500)+2500,rand.nextInt(580-140)+140);
+                                    }
+                                }
+
+                                lifeUp.add(lifeUps);
                             } catch (FileNotFoundException e) {
                                 e.printStackTrace();
                             }
